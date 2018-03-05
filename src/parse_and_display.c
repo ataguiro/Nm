@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 14:19:37 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/05 16:58:40 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/05 17:35:28 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parse_and_display(void)
 		if (tmp->type == 1) strcpy(t, "\033[1;31mDIRECTORY\033[0m");
 		if (tmp->type == 0) strcpy(t, "\033[1;32mREGULAR\033[0m");
 		if (tmp->type == 2) strcpy(t, "\033[1;31mNO PERMISSION\033[0m");
-		if (tmp->type == 3) strcpy(t, "\033[1;31mDOES_NOT_EXIST\0330m");
+		if (tmp->type == 3) strcpy(t, "\033[1;31mDOES_NOT_EXIST\033[0m");
 		printf("Type:\t\t%s\n", t);
 		if (tmp->state == MACHO32) strcpy(t, "\033[1;32mMACHO 32 bits\033[0m");
 		if (tmp->state == MACHO64) strcpy(t, "\033[1;32mMACHO 64 bits\033[0m");
