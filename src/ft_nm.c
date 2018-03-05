@@ -6,32 +6,34 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/03 15:30:51 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/05 15:00:27 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
 uint8_t	options;
-t_files	*g_files;
+t_files	*g_files = NULL;
 char	*av_0;
 
-static get_file_type(char *element)
+static uint8_t	get_file_type(char *element)
 {
 	struct stat	buf;
 	int			fd;
 	int			ret;
 
 	fd = open(element, O_RDONLY);
-	if (-1 == fd)
-		ft_printf("%s: could not open \"%s\"", av_0, element);
+	if (-1 == fd && errno == EACCES)
+		return (NO_PERMISSION);
+	else if (-1 == fd)
+		return (DOES_NOT_EXIST);
 	ret = fstat(fd, &buf);
 	if (-1 == ret)
-		ft_printf("%s: could not read info about \"%s\"", av_0, element);
-	
+		return (NO_PERMISSION);
+	return (S_ISDIR(buf.st_mode) ? DIRECTORY : REGULAR);
 }
 
-static void	save_as_file(char *element)
+static void		save_as_file(char *element)
 {
 	t_files	*ptr;
 	t_files	*new;
@@ -51,22 +53,36 @@ static void	save_as_file(char *element)
 	}
 }
 
-static void	distribute(char *element)
+static void		distribute(char *element)
 {
 	if (*element == '-')
 	{
 		element++;
-		(*element == 'n') ? ADD_OPT(options, N) : 0;
-		(*element == 'r') ? ADD_OPT(options, R) : 0;
-		(*element == 'j') ? ADD_OPT(options, J) : 0;
-		(*element == 'o') ? ADD_OPT(options, O) : 0;
-		(*element == 'A') ? ADD_OPT(options, A) : 0;
+		while (*element)
+		{
+			if (*element == 'n')
+				ADD_OPT(options, N);
+			else if (*element == 'r')
+				ADD_OPT(options, R);
+			else if (*element == 'j')
+				ADD_OPT(options, J);
+			else if (*element == 'o')
+				ADD_OPT(options, O);
+			else if (*element == 'A')
+				ADD_OPT(options, A);
+			else
+			{
+				ft_dprintf(2, "%s: '%c' option not recognized\n", av_0, *element);
+				exit(EXIT_FAILURE);
+			}
+			element++;
+		}
 	}
 	else
 		save_as_file(element);
 }
 
-static void	separate_options_and_files(char **av)
+static void		separate_options_and_files(char **av)
 {
 	while (*av)
 	{
@@ -75,9 +91,18 @@ static void	separate_options_and_files(char **av)
 	}
 }
 
-int			main(int ac, char **av)
+int				main(int ac, char **av)
 {
 	av[ac] = NULL;
 	av_0 = av[0];
-	separate_options_and_files(av);
+	separate_options_and_files(av + 1);
+
+	t_files	*ptr = g_files;
+	while (ptr)
+	{
+		ft_printf("filename: %s\ntype: %hhd\n-----------\n", ptr->filename, ptr->type);
+		ptr = ptr->next;
+	}
+	ft_printf("options: %b\n", options);
+	parse_and_display();
 }
