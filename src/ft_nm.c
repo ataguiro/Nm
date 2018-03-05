@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/05 15:00:27 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/05 16:58:59 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static uint8_t	get_file_type(char *element)
 	ret = fstat(fd, &buf);
 	if (-1 == ret)
 		return (NO_PERMISSION);
+	close(fd);
 	return (S_ISDIR(buf.st_mode) ? DIRECTORY : REGULAR);
 }
 
@@ -43,6 +44,7 @@ static void		save_as_file(char *element)
 	new->next = NULL;
 	new->filename = element;
 	new->type = get_file_type(element);
+	new->state = NONE;
 	if (!ptr)
 		g_files = new;
 	else
@@ -97,12 +99,6 @@ int				main(int ac, char **av)
 	av_0 = av[0];
 	separate_options_and_files(av + 1);
 
-	t_files	*ptr = g_files;
-	while (ptr)
-	{
-		ft_printf("filename: %s\ntype: %hhd\n-----------\n", ptr->filename, ptr->type);
-		ptr = ptr->next;
-	}
 	ft_printf("options: %b\n", options);
 	parse_and_display();
 }

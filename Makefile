@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/03/05 14:46:20 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/03/05 16:00:36 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ INCDIR	:=	include/
 LIBDIR	:=	libft/
 SRC		:=	$(SRCDIR)ft_nm.c \
 			$(SRCDIR)parse_and_display.c \
+			$(SRCDIR)fill_file_state.c \
 			$(SRCDIR)tools/tl_isinstr.c
 OBJ		:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 INC		:=	-I./$(INCDIR) -I./$(LIBDIR)$(INCDIR)
