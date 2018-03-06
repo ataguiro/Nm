@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/05 18:42:05 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/06 15:34:02 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,11 @@ extern char			*av_0;
 
 void	parse_and_display(void);
 void	fill_file_state(void);
+
+void	print_macho32(t_files *ptr);
+void	print_macho64(t_files *ptr);
+void	print_fat32(t_files *ptr);
+void	print_fat64(t_files *ptr);
+void	print_ar(t_files *ptr);
 
 #endif
