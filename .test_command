@@ -1,0 +1,1 @@
+./ft_nm tests/libft.a tests/ft_nm src tests/Makefile ~/test tests/test32 ./tests/foo_fat tests/test3

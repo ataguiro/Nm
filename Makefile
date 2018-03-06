@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/03/05 16:00:36 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/03/06 14:38:48 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,12 @@ LIBDIR	:=	libft/
 SRC		:=	$(SRCDIR)ft_nm.c \
 			$(SRCDIR)parse_and_display.c \
 			$(SRCDIR)fill_file_state.c \
-			$(SRCDIR)tools/tl_isinstr.c
+			$(SRCDIR)tools/tl_isinstr.c \
+			$(SRCDIR)print_per_state/print_macho32.c \
+			$(SRCDIR)print_per_state/print_macho64.c \
+			$(SRCDIR)print_per_state/print_fat32.c \
+			$(SRCDIR)print_per_state/print_fat64.c \
+			$(SRCDIR)print_per_state/print_ar.c
 OBJ		:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 INC		:=	-I./$(INCDIR) -I./$(LIBDIR)$(INCDIR)
 LIBPATH	:=	-L./$(LIBDIR) -lft
@@ -67,6 +72,7 @@ $(OBJDIR)%.o: $(SRCDIR)%.c $(CACHEF)
 $(CACHEF):
 	test -d $(OBJDIR) || mkdir $(OBJDIR)
 	test -d $(OBJDIR)tools || mkdir $(OBJDIR)tools
+	test -d $(OBJDIR)print_per_state || mkdir $(OBJDIR)print_per_state
 	test -d $(CACHEF) || touch $(CACHEF)
 
 %.c:
