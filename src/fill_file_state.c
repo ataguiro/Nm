@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 15:29:14 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/05 16:47:47 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/07 14:25:54 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 static uint64_t	get_magic(t_files *ptr)
 {
 	uint64_t	magic;
-	int			fd;
 
-	fd = open(ptr->filename, O_RDONLY);
-	read(fd, &magic, sizeof(uint64_t));
+	magic = *(uint64_t *)ptr->data;
 	return (magic);
 }
 

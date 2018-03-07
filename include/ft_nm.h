@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/06 15:34:02 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/07 14:00:55 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <mach-o/ranlib.h>
 # include <mach-o/nlist.h>
 # include <mach-o/stab.h>
+
+# include <sys/mman.h>
 
 #include <sys/stat.h>
 
@@ -70,6 +72,7 @@ typedef struct		s_files
 {
 	struct s_files	*next;
 	char			*filename;
+	char			*data;
 	uint8_t			type;
 	uint8_t			state;
 }					t_files;

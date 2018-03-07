@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/05 16:58:59 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/07 14:25:40 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ uint8_t	options;
 t_files	*g_files = NULL;
 char	*av_0;
 
-static uint8_t	get_file_type(char *element)
+static uint8_t	get_file_type(char *element, t_files *ptr)
 {
 	struct stat	buf;
 	int			fd;
@@ -30,8 +30,13 @@ static uint8_t	get_file_type(char *element)
 	ret = fstat(fd, &buf);
 	if (-1 == ret)
 		return (NO_PERMISSION);
+	if (S_ISDIR(buf.st_mode))
+		return (DIRECTORY);
+	if (MAP_FAILED == (ptr->data = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, \
+					fd, 0)))
+		return (NO_PERMISSION);
 	close(fd);
-	return (S_ISDIR(buf.st_mode) ? DIRECTORY : REGULAR);
+	return (REGULAR);
 }
 
 static void		save_as_file(char *element)
@@ -42,8 +47,9 @@ static void		save_as_file(char *element)
 	ptr = g_files;
 	new = (t_files *)malloc(sizeof(t_files));
 	new->next = NULL;
+	new->data = NULL;
 	new->filename = element;
-	new->type = get_file_type(element);
+	new->type = get_file_type(element, new);
 	new->state = NONE;
 	if (!ptr)
 		g_files = new;

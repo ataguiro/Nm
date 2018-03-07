@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/03/06 14:38:48 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/03/07 12:11:33 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INDEX	:=	1
 
 # ===== Standard =====
 CC		:=	gcc
-CFLAGS	:=	-g -Wall -Wextra -Werror -fsanitize=address
+CFLAGS	:=	-Wall -Wextra -Werror# -fsanitize=address
 SRCDIR	:=	src/
 OBJDIR	:=	obj/
 INCDIR	:=	include/
