@@ -19,11 +19,11 @@ static void	print_symbols(struct symtab_command *sym, t_files *ptr)
 	uint32_t		i;
 
 	i = 0;
-	array = (void *)ptr->data + sym->symoff;
+	array = (struct nlist_64 *)((void *)ptr->data + sym->symoff);
 	tmp = (void *)ptr->data + sym->stroff;
 	while (i++ < sym->nsyms)
 	{
-		printf("%x %hhx %hhx %hx %s\n", (uint32_t)(tmp + array[i].n_value), (uint8_t)(tmp + array[i].n_type), (uint8_t)(tmp + array[i].n_sect), (uint16_t)(tmp + array[i].n_desc), tmp + array[i].n_un.n_strx);
+		printf("%016llx %hhx %hhx %hx %s\n", (uint64_t)(array[i].n_value), (uint8_t)(array[i].n_type), (uint8_t)(array[i].n_sect), (uint16_t)(array[i].n_desc), tmp + array[i].n_un.n_strx);
 	}
 }
 
