@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/07 14:25:40 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/08 16:47:10 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ static void		distribute(char *element)
 				ADD_OPT(options, J);
 			else if (*element == 'o')
 				ADD_OPT(options, O);
-			else if (*element == 'A')
-				ADD_OPT(options, A);
+			else if (*element == 'p')
+				ADD_OPT(options, P);
 			else
 			{
 				ft_dprintf(2, "%s: '%c' option not recognized\n", av_0, *element);

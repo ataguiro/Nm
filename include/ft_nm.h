@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/08 15:14:48 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/08 16:46:49 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define R 2
 # define J 3
 # define O 4
-# define A 5
+# define P 5
 
 /*
 ** Basic file types and errors
