@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/07 14:00:55 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/08 15:14:48 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,35 @@
 # define AR_MAGIC		0x0a3e686372613c21
 # define AR_CIGMA		0x213c617263683e0a
 
-typedef struct		s_files
+typedef struct				s_parse
 {
-	struct s_files	*next;
-	char			*filename;
-	char			*data;
-	uint8_t			type;
-	uint8_t			state;
-}					t_files;
+	struct mach_header_64	*header64;
+	struct mach_header		*header;
+	struct load_command		*lc;
+	struct symtab_command	*sym;
+}							t_parse;
 
-extern uint8_t		options;
-extern t_files		*g_files;
-extern char			*av_0;
+typedef struct				s_files
+{
+	struct s_parse			parse;
+	struct s_files			*next;
+	char					*filename;
+	char					*data;
+	uint8_t					type;
+	uint8_t					state;
+}							t_files;
 
-void	parse_and_display(void);
-void	fill_file_state(void);
+extern uint8_t				options;
+extern t_files				*g_files;
+extern char					*av_0;
 
-void	print_macho32(t_files *ptr);
-void	print_macho64(t_files *ptr);
-void	print_fat32(t_files *ptr);
-void	print_fat64(t_files *ptr);
-void	print_ar(t_files *ptr);
+void						parse_and_display(void);
+void						fill_file_state(void);
+
+void						print_macho32(t_files *ptr);
+void						print_macho64(t_files *ptr);
+void						print_fat32(t_files *ptr);
+void						print_fat64(t_files *ptr);
+void						print_ar(t_files *ptr);
 
 #endif
