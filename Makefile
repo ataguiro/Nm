@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/03/07 12:11:33 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/03/09 17:35:00 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INDEX	:=	1
 
 # ===== Standard =====
 CC		:=	gcc
-CFLAGS	:=	-Wall -Wextra -Werror# -fsanitize=address
+CFLAGS	:=	-g -Wall -Wextra -Werror -fsanitize=address
 SRCDIR	:=	src/
 OBJDIR	:=	obj/
 INCDIR	:=	include/
@@ -25,6 +25,7 @@ LIBDIR	:=	libft/
 SRC		:=	$(SRCDIR)ft_nm.c \
 			$(SRCDIR)parse_and_display.c \
 			$(SRCDIR)fill_file_state.c \
+			$(SRCDIR)get_type.c \
 			$(SRCDIR)tools/tl_isinstr.c \
 			$(SRCDIR)print_per_state/print_macho32.c \
 			$(SRCDIR)print_per_state/print_macho64.c \

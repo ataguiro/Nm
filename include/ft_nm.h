@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/08 16:46:49 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/09 17:34:01 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,21 @@ typedef struct				s_parse
 	struct symtab_command	*sym;
 }							t_parse;
 
+typedef struct				s_info
+{
+	struct s_info			*next;
+	uint64_t				value;
+	char					*strx;
+	uint8_t					type;
+	uint8_t					sect;
+	uint8_t					desc;
+}							t_info;
+
 typedef struct				s_files
 {
 	struct s_parse			parse;
 	struct s_files			*next;
+	struct s_info			*info;
 	char					*filename;
 	char					*data;
 	uint8_t					type;
@@ -92,6 +103,7 @@ extern char					*av_0;
 
 void						parse_and_display(void);
 void						fill_file_state(void);
+char						get_type(uint8_t);
 
 void						print_macho32(t_files *ptr);
 void						print_macho64(t_files *ptr);

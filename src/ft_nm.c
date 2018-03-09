@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/08 16:47:10 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/09 17:09:28 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void		save_as_file(char *element)
 	new = (t_files *)malloc(sizeof(t_files));
 	new->next = NULL;
 	new->data = NULL;
+	new->info = NULL;
 	new->filename = element;
 	new->type = get_file_type(element, new);
 	new->state = NONE;
