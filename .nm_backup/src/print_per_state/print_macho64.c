@@ -30,7 +30,7 @@ static void	print_symbols(t_files *ptr)
 	}
 }
 
-static void append_symbol(char *tmp, t_files *ptr, struct nlist_64 entry)
+static void	append_symbol(char *tmp, t_files *ptr, struct nlist_64 entry)
 {
 	t_info			*new;
 	t_info			*head;

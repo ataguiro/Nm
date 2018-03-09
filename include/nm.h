@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nm.h                                            :+:      :+:    :+:   */
+/*   nm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NM_H
-# define FT_NM_H
+#ifndef NM_H
+# define NM_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -68,47 +68,15 @@
 # define AR_MAGIC		0x0a3e686372613c21
 # define AR_CIGMA		0x213c617263683e0a
 
-typedef struct				s_parse
-{
-	struct mach_header_64	*header64;
-	struct mach_header		*header;
-	struct load_command		*lc;
-	struct symtab_command	*sym;
-}							t_parse;
-
-typedef struct				s_info
-{
-	struct s_info			*next;
-	uint64_t				value;
-	char					*strx;
-	uint8_t					type;
-	uint8_t					sect;
-	uint8_t					desc;
-}							t_info;
-
 typedef struct				s_files
 {
-	struct s_parse			parse;
-	struct s_files			*next;
-	struct s_info			*info;
+	struct s_file			*next;
 	char					*filename;
-	char					*data;
 	uint8_t					type;
-	uint8_t					state;
 }							t_files;
 
-extern uint8_t				options;
 extern t_files				*g_files;
-extern char					*av_0;
-
-void						parse_and_display(void);
-void						fill_file_state(void);
-char						get_type(uint8_t);
-
-void						print_macho32(t_files *ptr);
-void						print_macho64(t_files *ptr);
-void						print_fat32(t_files *ptr);
-void						print_fat64(t_files *ptr);
-void						print_ar(t_files *ptr);
+extern uint8_t				options;
+extern char					*program;
 
 #endif
