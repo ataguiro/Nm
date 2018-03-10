@@ -7,17 +7,17 @@ static void	parse_segments(t_parse p)
 	j = -1;
 	p.sc64 = (struct segment_command_64 *)p.lc;
 	p.section64 = (struct section_64 *)((char *)p.sc64 \
-			+ sizeof(struct segment_command64));
+			+ sizeof(struct segment_command_64));
 	while (++j < p.sc64->nsects)
 	{
-		if (!ft_strcmp((s+j)->sectname, SECT_TEXT)
-			&& !ft_strcmp((s+j)->segname, SEG_TEXT))
+		if (!ft_strcmp((p.section64+j)->sectname, SECT_TEXT)
+			&& !ft_strcmp((p.section64+j)->segname, SEG_TEXT))
 			g_segments.text = j + 1;
-		else if (!ft_strcmp((s+j)->sectname, SECT_DATA)
-			&& !ft_strcmp((s+j)->segname, SEG_DATA))
+		else if (!ft_strcmp((p.section64+j)->sectname, SECT_DATA)
+			&& !ft_strcmp((p.section64+j)->segname, SEG_DATA))
 			g_segments.data = j + 1;
-		else if (!ft_strcmp((s+j)->sectname, SECT_BSS)
-			&& !ft_strcmp((s+j)->segname, SEG_BSS))
+		else if (!ft_strcmp((p.section64+j)->sectname, SECT_BSS)
+			&& !ft_strcmp((p.section64+j)->segname, SEG_DATA))
 			g_segments.bss = j + 1;
 	}
 }
@@ -45,9 +45,10 @@ void		handle_macho64(char *ptr)
 	t_parse		p;
 	uint32_t	i;
 
+	i = 0;
 	p.header64 = (struct mach_header_64 *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header_64);
-	while (i++ < p.header64.ncmds)
+	while (i++ < p.header64->ncmds)
 	{
 		if (p.lc->cmd == LC_SEGMENT_64)
 			parse_segments(p);

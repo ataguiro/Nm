@@ -29,17 +29,18 @@ static void	handle_file(char *data)
 		handle_fat64(data);
 }
 
-void		nm(char *filename)
+void		nm(char *filename, size_t size)
 {
 	int		fd;
 	char	*data;
 
 	fd = open(filename, O_RDONLY);
-	if (MAP_FAILED == (data = mmap(0, buf.st_size, PROT_READ, \
+	if (MAP_FAILED == (data = mmap(0, size, PROT_READ, \
 		MAP_PRIVATE, fd, 0)))
 	{
 		ft_dprintf(2, "%s: mmap() call failed.\n", program);
 		return ;
 	}
+	close(fd);
 	handle_file(data);
 }

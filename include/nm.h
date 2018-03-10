@@ -55,7 +55,7 @@
 */
 
 # define AR_MAGIC		0x0a3e686372613c21
-# define AR_CIGMA		0x213c617263683e0a
+# define AR_CIGAM		0x213c617263683e0a
 
 typedef struct					s_parse
 {
@@ -82,13 +82,14 @@ typedef struct				s_symbols
 typedef struct				s_segments
 {
 	uint64_t				text;
-	uint64_t				bss
+	uint64_t				bss;
 	uint64_t				data;
 }							t_segments;
 
 typedef struct				s_files
 {
-	struct s_file			*next;
+	size_t					size;
+	struct s_files			*next;
 	char					*filename;
 	char					*data;
 	uint8_t					type;
@@ -100,6 +101,12 @@ extern t_files				*g_files;
 extern uint8_t				options;
 extern char					*program;
 
-void						nm(char *);
+void						nm(char *, size_t);
+
+void						handle_macho32(char *);
+void						handle_macho64(char *);
+void						handle_fat32(char *);
+void						handle_fat64(char *);
+void						handle_ar(char *);
 
 #endif

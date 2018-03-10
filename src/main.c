@@ -12,8 +12,11 @@
 
 #include "nm.h"
 
-uint8_t	options = 0;
-char	*program = NULL;
+t_segments	g_segments = {0, 0, 0};
+char		*program = NULL;
+t_files		*g_files = NULL;
+t_symbols	*g_symbols = NULL;
+uint8_t		options = 0;
 
 static uint8_t	get_file_type(char *element, t_files *ptr)
 {
@@ -31,10 +34,8 @@ static uint8_t	get_file_type(char *element, t_files *ptr)
 		return (NO_PERMISSION);
 	if (S_ISDIR(buf.st_mode))
 		return (DIRECTORY);
-	//if (MAP_FAILED == (ptr->data = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, \
-					fd, 0)))
-	//	return (NO_PERMISSION);
 	close(fd);
+	ptr->size = buf.st_size;
 	return (REGULAR);
 }
 
@@ -113,7 +114,7 @@ int				main(int ac, char **av)
 		else if (ptr->type == DOES_NOT_EXIST)
 			ft_dprintf(2, "%s: %s: No such file or directory.\n", program, ptr->filename);
 		else
-			nm(ptr->filename)
+			nm(ptr->filename, ptr->size);
 		ptr = ptr->next;
 	}
 }

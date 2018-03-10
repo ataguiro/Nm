@@ -22,16 +22,13 @@ SRCDIR	:=	src/
 OBJDIR	:=	obj/
 INCDIR	:=	include/
 LIBDIR	:=	libft/
-SRC		:=	$(SRCDIR)ft_nm.c \
-			$(SRCDIR)parse_and_display.c \
-			$(SRCDIR)fill_file_state.c \
-			$(SRCDIR)get_type.c \
-			$(SRCDIR)tools/tl_isinstr.c \
-			$(SRCDIR)print_per_state/print_macho32.c \
-			$(SRCDIR)print_per_state/print_macho64.c \
-			$(SRCDIR)print_per_state/print_fat32.c \
-			$(SRCDIR)print_per_state/print_fat64.c \
-			$(SRCDIR)print_per_state/print_ar.c
+SRC		:=	$(SRCDIR)nm.c \
+			$(SRCDIR)main.c \
+			$(SRCDIR)handle_macho64.c \
+			$(SRCDIR)handle_macho32.c \
+			$(SRCDIR)handle_fat64.c \
+			$(SRCDIR)handle_fat32.c \
+			$(SRCDIR)handle_ar.c
 OBJ		:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 INC		:=	-I./$(INCDIR) -I./$(LIBDIR)$(INCDIR)
 LIBPATH	:=	-L./$(LIBDIR) -lft
