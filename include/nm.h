@@ -72,11 +72,14 @@ typedef struct				s_files
 {
 	struct s_file			*next;
 	char					*filename;
+	char					*data;
 	uint8_t					type;
 }							t_files;
 
 extern t_files				*g_files;
 extern uint8_t				options;
 extern char					*program;
+
+void						nm(char *);
 
 #endif
