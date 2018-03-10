@@ -1,4 +1,6 @@
 #include "nm.h"
+#define DO_MASK(type) (type & N_TYPE)
+
 
 static void	parse_segments(t_parse p)
 {
@@ -33,10 +35,52 @@ static void	parse_symbols(t_parse p, char *ptr)
 	while (++j < p.sym->nsyms)
 	{
 		g_symbols[j].value = p.array64[j].n_value;
-		g_symbols[j].name = ((void *)ptr + p.sym->symoff) \
+		g_symbols[j].name = ((void *)ptr + p.sym->stroff) \
 			+ p.array64[j].n_un.n_strx;
 		g_symbols[j].type = p.array64[j].n_type;
 		g_symbols[j].sect = p.array64[j].n_sect;
+	}
+	g_symbols[j].name = NULL;
+}
+
+static char	get_type(uint8_t type, uint64_t value, uint8_t sect)
+{
+	char	c;
+	c = '?';
+	c = (type & N_STAB) ? '-' : c;
+	c = (DO_MASK(type) == N_UNDF) ? 'u' : c;
+	if (DO_MASK(type) == N_UNDF)
+		c = (value) ? 'c' : 'u';
+	c = (DO_MASK(type) == N_PBUD) ? 'u' : c;
+	c = (DO_MASK(type) == N_ABS) ? 'a' : c;
+	if (DO_MASK(type) == N_SECT)
+	{
+		c = 's';
+		c = (sect == g_segments.text) ? 't' : c;
+		c = (sect == g_segments.data) ? 'd' : c;
+		c = (sect == g_segments.bss) ? 'b' : c;
+	}
+	c = (DO_MASK(type) == N_INDR) ? 'i' : c;
+	c = c - (((type & N_EXT) && c != '?') ? 32 : 0);
+	return (c);
+}
+
+static void	print_symbols(void)
+{
+	int64_t	i;
+	char		c;
+
+	i = -1;
+	while (g_symbols[++i].name)
+	{
+		c = get_type(g_symbols[i].type, g_symbols[i].value, g_symbols[i].sect);
+		if ((c == '-' || c == 'u') || !ft_strcmp(g_symbols[i].name, ""))
+			continue ;
+		if (!g_symbols[i].value)
+			ft_printf("%16s", " ");
+		else
+			ft_printf("%016llx", g_symbols[i].value);
+		ft_printf(" %c %s\n", c, g_symbols[i].name);
 	}
 }
 
@@ -56,4 +100,5 @@ void		handle_macho64(char *ptr)
 			parse_symbols(p, ptr);
 		p.lc = (void *)p.lc + p.lc->cmdsize;
 	}
+	print_symbols();
 }

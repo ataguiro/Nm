@@ -12,14 +12,14 @@
 
 #include "nm.h"
 
-static void	handle_file(char *data)
+static void	handle_file(char *data, char *filename)
 {
 	uint64_t	magic;
 
 	magic = *(uint64_t *)data;
-	if (magic == AR_MAGIC || magic == AR_CIGAM)
-		handle_ar(data);
-	else if (magic == MH_MAGIC || magic == MH_CIGAM)
+	(magic == AR_MAGIC || magic == AR_CIGAM) ? handle_ar(data) : 0;
+	magic = (uint32_t)magic;
+	if (magic == MH_MAGIC || magic == MH_CIGAM)
 		handle_macho32(data);
 	else if (magic == MH_MAGIC_64 || magic == MH_CIGAM_64)
 		handle_macho64(data);
@@ -27,6 +27,10 @@ static void	handle_file(char *data)
 		handle_fat32(data);
 	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
 		handle_fat64(data);
+	else
+	{
+		ft_dprintf(2, "%s: %s The file was not recognized as a valid object file\n\n", program, filename);
+	}
 }
 
 void		nm(char *filename, size_t size)
@@ -42,5 +46,5 @@ void		nm(char *filename, size_t size)
 		return ;
 	}
 	close(fd);
-	handle_file(data);
+	handle_file(data, filename);
 }
