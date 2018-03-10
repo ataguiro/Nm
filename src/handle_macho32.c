@@ -14,13 +14,14 @@ static void	parse_segments(t_parse p)
 	{
 		if (!ft_strcmp((p.section+j)->sectname, SECT_TEXT)
 			&& !ft_strcmp((p.section+j)->segname, SEG_TEXT))
-			g_segments.text = j + 1;
+			g_segments.text = g_segments.k + 1;
 		else if (!ft_strcmp((p.section+j)->sectname, SECT_DATA)
 			&& !ft_strcmp((p.section+j)->segname, SEG_DATA))
-			g_segments.data = j + 1;
+			g_segments.data = g_segments.k + 1;
 		else if (!ft_strcmp((p.section+j)->sectname, SECT_BSS)
 			&& !ft_strcmp((p.section+j)->segname, SEG_DATA))
-			g_segments.bss = j + 1;
+			g_segments.bss = g_segments.k + 1;
+		(g_segments.k)++;
 	}
 }
 
@@ -101,4 +102,8 @@ void		handle_macho32(char *ptr)
 		p.lc = (void *)p.lc + p.lc->cmdsize;
 	}
 	print_symbols();
+	g_segments.text = 0;
+	g_segments.data = 0;
+	g_segments.bss = 0;
+	g_segments.k = 0;
 }
