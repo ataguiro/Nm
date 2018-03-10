@@ -51,22 +51,40 @@
 # define DOES_NOT_EXIST	3
 
 /*
-** Advanced regular files states
-*/
-
-# define MACHO32		32
-# define MACHO64		64
-# define FAT32			33
-# define FAT64			65
-# define AR				0
-# define NONE			1
-
-/*
 ** AR Magic number
 */
 
 # define AR_MAGIC		0x0a3e686372613c21
 # define AR_CIGMA		0x213c617263683e0a
+
+typedef struct					s_parse
+{
+	struct mach_header			*header;
+	struct mach_header_64		*header64;
+	struct load_command			*lc;
+	struct segment_command		*sc;
+	struct segment_command_64	*sc64;
+	struct section				*section;
+	struct section_64			*section64;
+	struct nlist				*array;
+	struct nlist_64				*array64;
+	struct symtab_command		*sym;
+}								t_parse;
+
+typedef struct				s_symbols
+{
+	uint64_t				value;
+	char					*name;
+	uint8_t					sect;
+	char					type;
+}							t_symbols;
+
+typedef struct				s_segments
+{
+	uint64_t				text;
+	uint64_t				bss
+	uint64_t				data;
+}							t_segments;
 
 typedef struct				s_files
 {
@@ -76,6 +94,8 @@ typedef struct				s_files
 	uint8_t					type;
 }							t_files;
 
+extern t_segments			g_segments;
+extern t_symbols			*g_symbols;
 extern t_files				*g_files;
 extern uint8_t				options;
 extern char					*program;
