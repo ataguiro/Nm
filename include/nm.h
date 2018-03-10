@@ -84,6 +84,7 @@ typedef struct				s_segments
 	uint64_t				text;
 	uint64_t				bss;
 	uint64_t				data;
+	uint64_t				k;
 }							t_segments;
 
 typedef struct				s_files

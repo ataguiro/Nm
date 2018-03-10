@@ -12,7 +12,7 @@
 
 #include "nm.h"
 
-t_segments	g_segments = {0, 0, 0};
+t_segments	g_segments = {0, 0, 0, 0};
 char		*program = NULL;
 t_files		*g_files = NULL;
 t_symbols	*g_symbols = NULL;

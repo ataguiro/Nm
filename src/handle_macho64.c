@@ -1,7 +1,6 @@
 #include "nm.h"
 #define DO_MASK(type) (type & N_TYPE)
 
-
 static void	parse_segments(t_parse p)
 {
 	int64_t				j;
@@ -14,13 +13,14 @@ static void	parse_segments(t_parse p)
 	{
 		if (!ft_strcmp((p.section64+j)->sectname, SECT_TEXT)
 			&& !ft_strcmp((p.section64+j)->segname, SEG_TEXT))
-			g_segments.text = j + 1;
+			g_segments.text = g_segments.k + 1;
 		else if (!ft_strcmp((p.section64+j)->sectname, SECT_DATA)
 			&& !ft_strcmp((p.section64+j)->segname, SEG_DATA))
-			g_segments.data = j + 1;
+			g_segments.data = g_segments.k + 1;
 		else if (!ft_strcmp((p.section64+j)->sectname, SECT_BSS)
 			&& !ft_strcmp((p.section64+j)->segname, SEG_DATA))
-			g_segments.bss = j + 1;
+			g_segments.bss = g_segments.k + 1;
+		(g_segments.k)++;
 	}
 }
 
@@ -90,6 +90,7 @@ void		handle_macho64(char *ptr)
 	uint32_t	i;
 
 	i = 0;
+	g_segments.k = 0;
 	p.header64 = (struct mach_header_64 *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header_64);
 	while (i++ < p.header64->ncmds)
@@ -101,4 +102,8 @@ void		handle_macho64(char *ptr)
 		p.lc = (void *)p.lc + p.lc->cmdsize;
 	}
 	print_symbols();
+	g_segments.text = 0;
+	g_segments.data = 0;
+	g_segments.bss = 0;
+	g_segments.k = 0;
 }
