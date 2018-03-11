@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/09 17:09:28 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/11 18:38:34 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ static void		separate_options_and_files(char **av)
 
 int				main(int ac, char **av)
 {
-	t_files	*ptr;
+	t_files				*ptr;
+	static default_name = "a.out";
 
 	av[ac] = NULL;
 	program = av[0];

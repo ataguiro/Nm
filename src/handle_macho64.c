@@ -46,6 +46,7 @@ static void	parse_symbols(t_parse p, char *ptr)
 static char	get_type(uint8_t type, uint64_t value, uint8_t sect)
 {
 	char	c;
+
 	c = '?';
 	c = (type & N_STAB) ? '-' : c;
 	c = (DO_MASK(type) == N_UNDF) ? 'u' : c;
@@ -67,7 +68,7 @@ static char	get_type(uint8_t type, uint64_t value, uint8_t sect)
 
 static void	print_symbols(void)
 {
-	int64_t	i;
+	int64_t		i;
 	char		c;
 
 	i = -1;
@@ -76,7 +77,7 @@ static void	print_symbols(void)
 		c = get_type(g_symbols[i].type, g_symbols[i].value, g_symbols[i].sect);
 		if ((c == '-' || c == 'u') || !ft_strcmp(g_symbols[i].name, ""))
 			continue ;
-		if (!g_symbols[i].value)
+		if (!g_symbols[i].value && !ft_isinstr(c, "TDB"))
 			ft_printf("%16s", " ");
 		else
 			ft_printf("%016llx", g_symbols[i].value);
