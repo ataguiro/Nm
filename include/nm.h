@@ -61,6 +61,9 @@ typedef struct					s_parse
 {
 	struct mach_header			*header;
 	struct mach_header_64		*header64;
+	struct fat_header			*fathdr;
+	struct fat_arch				*fatarch;
+	struct fat_arch_64			*fatarch64;
 	struct load_command			*lc;
 	struct segment_command		*sc;
 	struct segment_command_64	*sc64;

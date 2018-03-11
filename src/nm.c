@@ -12,7 +12,7 @@
 
 #include "nm.h"
 
-static void	handle_file(char *data, char *filename)
+void	handle_file(char *data, char *filename)
 {
 	uint64_t	magic;
 
@@ -24,16 +24,16 @@ static void	handle_file(char *data, char *filename)
 	else if (magic == MH_MAGIC_64 || magic == MH_CIGAM_64)
 		handle_macho64(data);
 	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
-		handle_fat32(data);
+		handle_fat32(data, filename);
 	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
-		handle_fat64(data);
+		handle_fat64(data, filename);
 	else
 	{
 		ft_dprintf(2, "%s: %s The file was not recognized as a valid object file\n\n", program, filename);
 	}
 }
 
-void		nm(char *filename, size_t size)
+void	nm(char *filename, size_t size)
 {
 	int		fd;
 	char	*data;
