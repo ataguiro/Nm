@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/11 18:38:34 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/12 13:20:44 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_segments	g_segments = {0, 0, 0, 0};
 char		*program = NULL;
+char		*filename = NULL;
 t_files		*g_files = NULL;
 t_symbols	*g_symbols = NULL;
 uint8_t		options = 0;
@@ -115,7 +116,7 @@ int				main(int ac, char **av)
 		else if (ptr->type == DOES_NOT_EXIST)
 			ft_dprintf(2, "%s: %s: No such file or directory.\n", program, ptr->filename);
 		else
-			nm(ptr->filename, ptr->size);
+			nm(filename, ptr->size);
 		ptr = ptr->next;
 	}
 }

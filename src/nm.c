@@ -6,13 +6,13 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/09 17:09:28 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/12 14:03:38 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
 
-void	handle_file(char *data, char *filename)
+void	handle_file(char *data)
 {
 	uint64_t	magic;
 
@@ -24,21 +24,21 @@ void	handle_file(char *data, char *filename)
 	else if (magic == MH_MAGIC_64 || magic == MH_CIGAM_64)
 		handle_macho64(data);
 	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
-		handle_fat32(data, filename);
+		handle_fat32(data);
 	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
-		handle_fat64(data, filename);
+		handle_fat64(data);
 	else
 	{
 		ft_dprintf(2, "%s: %s The file was not recognized as a valid object file\n\n", program, filename);
 	}
 }
 
-void	nm(char *filename, size_t size)
+void	nm(char *filename_local, size_t size)
 {
 	int		fd;
 	char	*data;
 
-	fd = open(filename, O_RDONLY);
+	fd = open(filename_local, O_RDONLY);
 	if (MAP_FAILED == (data = mmap(0, size, PROT_READ, \
 		MAP_PRIVATE, fd, 0)))
 	{
@@ -46,5 +46,6 @@ void	nm(char *filename, size_t size)
 		return ;
 	}
 	close(fd);
-	handle_file(data, filename);
+	filename = filename_local;
+	handle_file(data);
 }

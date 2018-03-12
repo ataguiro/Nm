@@ -103,8 +103,5 @@ void		handle_macho64(char *ptr)
 		p.lc = (void *)p.lc + p.lc->cmdsize;
 	}
 	print_symbols();
-	g_segments.text = 0;
-	g_segments.data = 0;
-	g_segments.bss = 0;
-	g_segments.k = 0;
+	clear_globals();
 }

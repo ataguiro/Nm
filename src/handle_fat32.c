@@ -3,7 +3,7 @@
 #define SWAP32(x) ((((x) & 0xff000000) >> 24) | (((x) & 0xff0000) >> 8) \
 							| (((x) & 0xff00) << 8) | (((x) & 0xff) << 24))
 
-void		handle_fat32(char *ptr, char *filename)
+void		handle_fat32(char *ptr)
 {
 	t_parse		p;
 	uint32_t	n;

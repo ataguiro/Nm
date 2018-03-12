@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/11 18:13:52 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/12 14:02:56 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,13 @@ extern t_segments			g_segments;
 extern t_symbols			*g_symbols;
 extern t_files				*g_files;
 extern uint8_t				options;
+
 extern char					*program;
+extern char					*filename;
 
 void						nm(char *, size_t);
+
+void						handle_file(char *);
 
 void						handle_macho32(char *);
 void						handle_macho64(char *);
