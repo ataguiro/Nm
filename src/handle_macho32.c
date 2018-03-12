@@ -1,8 +1,6 @@
 #include "nm.h"
 #define DO_MASK(type) (type & N_TYPE)
 
-int			g_swap = 0;
-
 static void	parse_segments(t_parse p)
 {
 	int64_t				j;
@@ -86,7 +84,7 @@ static void	print_symbols(void)
 	}
 }
 
-void		handle_macho32(char *ptr, uint8_t swap)
+void		handle_macho32(char *ptr)
 {
 	t_parse		p;
 	uint32_t	i;

@@ -1,7 +1,16 @@
-#include "nm.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_fat32.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/12 14:34:13 by ataguiro          #+#    #+#             */
+/*   Updated: 2018/03/12 14:36:41 by ataguiro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#define SWAP32(x) ((((x) & 0xff000000) >> 24) | (((x) & 0xff0000) >> 8) \
-							| (((x) & 0xff00) << 8) | (((x) & 0xff) << 24))
+#include "nm.h"
 
 void		handle_fat32(char *ptr)
 {
@@ -11,12 +20,12 @@ void		handle_fat32(char *ptr)
 	int64_t		i;
 
 	i = -1;
-	p.fathdr = ptr;
+	p.fathdr = (struct fat_header *)ptr;
 	p.fatarch = (struct fat_arch *)(p.fathdr + 1);
-	n = SWAP32(p.fathdr->nfat_arch);
+	n = swap_uint32(p.fathdr->nfat_arch);
 	while (++i < n)
 	{
-		offset = SWAP32(p.fatarch[i].offset);
-		handle_file(ptr + offset, filename);
+		offset = swap_uint32(p.fatarch[i].offset);
+		handle_file(ptr + offset);
 	}
 }

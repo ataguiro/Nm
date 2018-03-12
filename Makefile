@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/03/09 17:35:00 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/03/12 14:37:18 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,9 @@ SRC		:=	$(SRCDIR)nm.c \
 			$(SRCDIR)handle_macho32.c \
 			$(SRCDIR)handle_fat64.c \
 			$(SRCDIR)handle_fat32.c \
-			$(SRCDIR)handle_ar.c
+			$(SRCDIR)handle_ar.c \
+			$(SRCDIR)clear_globals.c \
+			$(SRCDIR)swap_bytes.c
 OBJ		:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 INC		:=	-I./$(INCDIR) -I./$(LIBDIR)$(INCDIR)
 LIBPATH	:=	-L./$(LIBDIR) -lft

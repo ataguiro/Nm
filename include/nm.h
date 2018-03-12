@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/12 14:02:56 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/12 14:42:59 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,47 +74,53 @@ typedef struct					s_parse
 	struct symtab_command		*sym;
 }								t_parse;
 
-typedef struct				s_symbols
+typedef struct					s_symbols
 {
-	uint64_t				value;
-	char					*name;
-	uint8_t					sect;
-	char					type;
-}							t_symbols;
+	uint64_t					value;
+	char						*name;
+	uint8_t						sect;
+	char						type;
+}								t_symbols;
 
-typedef struct				s_segments
+typedef struct					s_segments
 {
-	uint64_t				text;
-	uint64_t				bss;
-	uint64_t				data;
-	uint64_t				k;
-}							t_segments;
+	uint64_t					text;
+	uint64_t					bss;
+	uint64_t					data;
+	uint64_t					k;
+}								t_segments;
 
-typedef struct				s_files
+typedef struct					s_files
 {
-	size_t					size;
-	struct s_files			*next;
-	char					*filename;
-	char					*data;
-	uint8_t					type;
-}							t_files;
+	size_t						size;
+	struct s_files				*next;
+	char						*filename;
+	char						*data;
+	uint8_t						type;
+}								t_files;
 
-extern t_segments			g_segments;
-extern t_symbols			*g_symbols;
-extern t_files				*g_files;
-extern uint8_t				options;
+extern t_segments				g_segments;
+extern t_symbols				*g_symbols;
+extern t_files					*g_files;
+extern uint8_t					options;
 
-extern char					*program;
-extern char					*filename;
+extern char						*program;
+extern char						*filename;
 
-void						nm(char *, size_t);
+void							nm(char *, size_t);
 
-void						handle_file(char *);
+void							handle_file(char *);
 
-void						handle_macho32(char *);
-void						handle_macho64(char *);
-void						handle_fat32(char *);
-void						handle_fat64(char *);
-void						handle_ar(char *);
+void							handle_macho32(char *);
+void							handle_macho64(char *);
+void							handle_fat32(char *);
+void							handle_fat64(char *);
+void							handle_ar(char *);
+
+void							clear_globals(void);
+
+uint16_t						swap_uint16(uint16_t n);
+uint32_t						swap_uint32(uint32_t n);
+uint64_t						swap_uint64(uint64_t n);
 
 #endif

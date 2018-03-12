@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/12 13:20:44 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/12 14:38:20 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,13 @@ static void		separate_options_and_files(char **av)
 int				main(int ac, char **av)
 {
 	t_files				*ptr;
-	static default_name = "a.out";
 
 	av[ac] = NULL;
 	program = av[0];
 	separate_options_and_files(av + 1);
+	ptr = g_files;
+	if (!ptr)
+		save_as_file("a.out");
 	ptr = g_files;
 	while (ptr)
 	{
@@ -116,7 +118,7 @@ int				main(int ac, char **av)
 		else if (ptr->type == DOES_NOT_EXIST)
 			ft_dprintf(2, "%s: %s: No such file or directory.\n", program, ptr->filename);
 		else
-			nm(filename, ptr->size);
+			nm(ptr->filename, ptr->size);
 		ptr = ptr->next;
 	}
 }
