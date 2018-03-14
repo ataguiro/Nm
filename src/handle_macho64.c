@@ -72,6 +72,7 @@ static void	print_symbols(void)
 	char		c;
 
 	i = -1;
+	sort();
 	while (g_symbols[++i].name)
 	{
 		c = get_type(g_symbols[i].type, g_symbols[i].value, g_symbols[i].sect);

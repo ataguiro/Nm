@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/12 14:38:20 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/14 18:38:39 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ static void		distribute(char *element)
 {
 	if (*element == '-')
 	{
-		element++;
-		while (*element)
+		while (*(++element))
 		{
 			if (*element == 'n')
 				ADD_OPT(options, N);
@@ -79,10 +78,10 @@ static void		distribute(char *element)
 				ADD_OPT(options, P);
 			else
 			{
-				ft_dprintf(2, "%s: '%c' option not recognized\n", program, *element);
+				ft_dprintf(2, "%s: '%c' option not recognized\n", \
+						program, *element);
 				exit(EXIT_FAILURE);
 			}
-			element++;
 		}
 	}
 	else
@@ -101,6 +100,7 @@ static void		separate_options_and_files(char **av)
 int				main(int ac, char **av)
 {
 	t_files				*ptr;
+	uint8_t				multi;
 
 	av[ac] = NULL;
 	program = av[0];
@@ -109,6 +109,7 @@ int				main(int ac, char **av)
 	if (!ptr)
 		save_as_file("a.out");
 	ptr = g_files;
+	multi = (ptr->next) ? 1 : 0;
 	while (ptr)
 	{
 		if (ptr->type == DIRECTORY)
@@ -118,7 +119,10 @@ int				main(int ac, char **av)
 		else if (ptr->type == DOES_NOT_EXIST)
 			ft_dprintf(2, "%s: %s: No such file or directory.\n", program, ptr->filename);
 		else
+		{
+			multi ? ft_printf("\n%s:\n", ptr->filename) : 0;
 			nm(ptr->filename, ptr->size);
+		}
 		ptr = ptr->next;
 	}
 }
