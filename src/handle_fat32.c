@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 14:34:13 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/12 14:36:41 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/15 11:37:55 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ void		handle_fat32(char *ptr)
 	while (++i < n)
 	{
 		offset = swap_uint32(p.fatarch[i].offset);
-		handle_file(ptr + offset);
+		if (((swap_uint32(p.fatarch[i].cputype) \
+				== CPU_TYPE_I386) && (sizeof(void *) == 4))
+				|| ((swap_uint32(p.fatarch[i].cputype) == CPU_TYPE_X86_64)
+					&& (sizeof(void *) == 8)))
+			handle_file(ptr + offset);
 	}
 }

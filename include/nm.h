@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/14 17:49:11 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/15 14:35:23 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,6 @@ uint16_t						swap_uint16(uint16_t n);
 uint32_t						swap_uint32(uint32_t n);
 uint64_t						swap_uint64(uint64_t n);
 
-void							sort(void);
+void							sort(size_t size);
 
 #endif

@@ -1,6 +1,8 @@
 #include "nm.h"
 #define DO_MASK(type) (type & N_TYPE)
 
+int64_t	g_size;
+
 static void	parse_segments(t_parse p)
 {
 	int64_t				j;
@@ -32,7 +34,8 @@ static void	parse_symbols(t_parse p, char *ptr)
 	p.sym = (struct symtab_command *)p.lc;
 	g_symbols = (t_symbols *)malloc(sizeof(t_symbols) * (p.sym->nsyms + 1));
 	p.array64 = (void *)ptr + p.sym->symoff;
-	while (++j < p.sym->nsyms)
+	g_size = p.sym->nsyms;
+	while (++j < g_size)
 	{
 		g_symbols[j].value = p.array64[j].n_value;
 		g_symbols[j].name = ((void *)ptr + p.sym->stroff) \
@@ -72,7 +75,7 @@ static void	print_symbols(void)
 	char		c;
 
 	i = -1;
-	sort();
+	sort(g_size);
 	while (g_symbols[++i].name)
 	{
 		c = get_type(g_symbols[i].type, g_symbols[i].value, g_symbols[i].sect);

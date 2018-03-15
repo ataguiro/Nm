@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 15:43:21 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/14 17:55:40 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/15 14:40:51 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,22 @@ static int	compare(t_symbols a, t_symbols b)
 	return (ret);
 }
 
-void		sort(void)
+void		sort(size_t n)
 {
-	int					i;
-	int					j;
+	size_t				i;
+	size_t				j;
 	t_symbols			tmp;
 
-	i = 0;
-	while (g_symbols[i].name)
+	i = 1;
+	while (i <= n - 1)
 	{
-		j = i + 1;
-		while (g_symbols[j].name)
+		j = i;
+		while (j > 0 && (compare(g_symbols[j - 1], g_symbols[j]) > 0))
 		{
-			if (compare(g_symbols[i], g_symbols[j]) > 0)
-			{
-				tmp = g_symbols[i];
-				g_symbols[i] = g_symbols[j];
-				g_symbols[j] = tmp;
-			}
-			j++;
+			tmp = g_symbols[j];
+			g_symbols[j] = g_symbols[j - 1];
+			g_symbols[j - 1] = tmp;
+			j--;
 		}
 		i++;
 	}
