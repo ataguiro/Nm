@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/03/14 17:46:04 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/03/16 17:12:28 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ OBJDIR	:=	obj/
 INCDIR	:=	include/
 LIBDIR	:=	libft/
 SRC		:=	$(SRCDIR)nm.c \
-			$(SRCDIR)main.c \
+			$(SRCDIR)main_nm.c \
 			$(SRCDIR)handle_macho64.c \
 			$(SRCDIR)handle_macho32.c \
 			$(SRCDIR)handle_fat64.c \
