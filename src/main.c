@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/14 18:38:39 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/16 17:07:53 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,7 @@ int				main(int ac, char **av)
 	program = av[0];
 	separate_options_and_files(av + 1);
 	ptr = g_files;
-	if (!ptr)
-		save_as_file("a.out");
+	(!ptr) ? save_as_file("a.out") : 0;
 	ptr = g_files;
 	multi = (ptr->next) ? 1 : 0;
 	while (ptr)

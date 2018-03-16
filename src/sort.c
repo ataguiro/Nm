@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 15:43:21 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/15 14:40:51 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/16 16:43:05 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,16 @@
 static int	compare(t_symbols a, t_symbols b)
 {
 	int		ret;
-	ret = ft_strcmp(a.name, b.name);
+
+	if (ISON(options, N))
+		ret = (a.value > b.value);
+	else
+		ret = ft_strcmp(a.name, b.name);
 	if (!ret)
 		ret = (a.value > b.value);
 
+	if (ISON(options, R))
+		ret = !ret;
 	return (ret);
 }
 
@@ -28,6 +34,8 @@ void		sort(size_t n)
 	size_t				j;
 	t_symbols			tmp;
 
+	if (ISON(options, P))
+		return ;
 	i = 1;
 	while (i <= n - 1)
 	{

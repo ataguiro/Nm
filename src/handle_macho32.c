@@ -68,23 +68,31 @@ static char	get_type(uint8_t type, uint64_t value, uint8_t sect)
 	return (c);
 }
 
-static void	print_symbols(void)
+static void	print_symbols(uint8_t o)
 {
-	int64_t	i;
+	int64_t		i;
+	uint8_t		flag;
 	char		c;
 
 	i = -1;
 	sort(g_size);
+	flag = ISON(options, J);
 	while (g_symbols[++i].name)
 	{
 		c = get_type(g_symbols[i].type, g_symbols[i].value, g_symbols[i].sect);
 		if ((c == '-' || c == 'u') || !ft_strcmp(g_symbols[i].name, ""))
 			continue ;
-		if (!g_symbols[i].value)
-			ft_printf("%8s", " ");
+		o ? ft_printf("%s: ", filename) : 0;
+		if (!flag)
+		{
+			if (!g_symbols[i].value)
+				ft_printf("%8s", " ");
+			else
+				ft_printf("%08llx", g_symbols[i].value);
+			ft_printf(" %c %s\n", c, g_symbols[i].name);
+		}
 		else
-			ft_printf("%08llx", g_symbols[i].value);
-		ft_printf(" %c %s\n", c, g_symbols[i].name);
+			ft_printf("%s\n", g_symbols[i].name);
 	}
 }
 
@@ -104,6 +112,6 @@ void		handle_macho32(char *ptr)
 			parse_symbols(p, ptr);
 		p.lc = (void *)p.lc + p.lc->cmdsize;
 	}
-	print_symbols();
+	print_symbols(ISON(options, O));
 	clear_globals();
 }

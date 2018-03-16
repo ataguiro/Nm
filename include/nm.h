@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/15 14:35:23 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/16 16:57:15 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@
 
 # include "libft.h"
 
-# define ISON(x, y) (x & 1 << y)
-# define ADD_OPT(x, y) (x |= 1 << y)
+# define ISON(x, y) (x & (1 << y))
+# define ADD_OPT(x, y) (x |= (1 << y))
 
-# define N 1
+# define N 0
+# define P 1
 # define R 2
-# define J 3
-# define O 4
-# define P 5
+# define O 3
+# define J 4
 
 /*
 ** Basic file types and errors
