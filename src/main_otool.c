@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/16 17:07:53 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/16 18:34:16 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int				main(int ac, char **av)
 		else
 		{
 			multi ? ft_printf("\n%s:\n", ptr->filename) : 0;
-			nm(ptr->filename, ptr->size);
+			otool(ptr->filename, ptr->size);
 		}
 		ptr = ptr->next;
 	}
