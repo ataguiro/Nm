@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/16 17:07:53 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/17 13:21:11 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int				main(int ac, char **av)
 	(!ptr) ? save_as_file("a.out") : 0;
 	ptr = g_files;
 	multi = (ptr->next) ? 1 : 0;
+	ft_printf("Hello\n");
+	ft_printf("%b\n", options);
 	while (ptr)
 	{
 		if (ptr->type == DIRECTORY)

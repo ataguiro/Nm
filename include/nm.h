@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/16 16:57:15 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/17 13:42:28 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ extern char						*program;
 extern char						*filename;
 
 void							nm(char *, size_t);
+void							otool(char *, size_t);
 
 void							handle_file(char *);
 
