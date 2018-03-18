@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/17 13:42:28 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/18 13:26:21 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@
 # define R 2
 # define O 3
 # define J 4
+
+# define T 0
+# define D 1
+# define B 2
 
 /*
 ** Basic file types and errors
@@ -111,6 +115,7 @@ void							nm(char *, size_t);
 void							otool(char *, size_t);
 
 void							handle_file(char *);
+void							handle_fileo(char *);
 
 void							handle_macho32(char *);
 void							handle_macho64(char *);

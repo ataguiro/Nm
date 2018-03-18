@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/03/16 17:12:28 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/03/18 14:12:34 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,8 +72,6 @@ $(OBJDIR)%.o: $(SRCDIR)%.c $(CACHEF)
 
 $(CACHEF):
 	test -d $(OBJDIR) || mkdir $(OBJDIR)
-	test -d $(OBJDIR)tools || mkdir $(OBJDIR)tools
-	test -d $(OBJDIR)print_per_state || mkdir $(OBJDIR)print_per_state
 	test -d $(CACHEF) || touch $(CACHEF)
 
 %.c:

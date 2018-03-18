@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/16 18:34:16 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/18 13:24:32 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,12 @@ static void		distribute(char *element)
 	{
 		while (*(++element))
 		{
-			if (*element == 'n')
-				ADD_OPT(options, N);
-			else if (*element == 'r')
-				ADD_OPT(options, R);
-			else if (*element == 'j')
-				ADD_OPT(options, J);
-			else if (*element == 'o')
-				ADD_OPT(options, O);
-			else if (*element == 'p')
-				ADD_OPT(options, P);
+			if (*element == 't')
+				ADD_OPT(options, T);
+			else if (*element == 'd')
+				ADD_OPT(options, D);
+			else if (*element == 'b')
+				ADD_OPT(options, B);
 			else
 			{
 				ft_dprintf(2, "%s: '%c' option not recognized\n", \
