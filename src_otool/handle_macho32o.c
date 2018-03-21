@@ -28,14 +28,14 @@ static void	parse_segments(t_parse p)
 	}
 }
 
-void		handle_macho64o(char *ptr)
+void		handle_macho32o(char *ptr)
 {
 	t_parse		p;
 	uint32_t	i;
 
 	i = 0;
 	g_segments.k = 0;
-	p.header = (struct mach_header_ *)ptr;
+	p.header = (struct mach_header *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header);
 	while (i++ < p.header->ncmds)
 	{

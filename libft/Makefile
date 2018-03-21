@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/27 16:52:41 by ataguiro          #+#    #+#              #
-#    Updated: 2018/03/07 12:11:39 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/03/14 14:02:39 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRC_NAME =	ft_printf.c \
 			ft_readline.c \
 			btree_del.c \
 			ft_count_words.c \
+			ft_print_memory.c \
 			ft_lstdel.c \
 			ft_itoa.c \
 			ft_ctoa.c \
@@ -148,7 +149,7 @@ $(OBJ_PATH)%.o : $(SRC_PATH)%.c
 	@$(CC) $(INCLUDE_PATH) $(CFLAGS) -c $< -o $@
 	@printf "\r"
 	@printf "\033[1;32m[ compiling Libft... ] "
-	@printf "$(shell echo 'scale=2;$(INDEX)/108 * 100' | bc)%%\033[0m"
+	@printf "$(shell echo 'scale=2;$(INDEX)/109 * 100' | bc)%%\033[0m"
 	$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
 clean:

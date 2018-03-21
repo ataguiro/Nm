@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/18 13:26:21 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/21 11:17:46 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,9 @@ void							handle_file(char *);
 void							handle_fileo(char *);
 
 void							handle_macho32(char *);
+void							handle_macho32o(char *);
 void							handle_macho64(char *);
+void							handle_macho64o(char *);
 void							handle_fat32(char *);
 void							handle_fat64(char *);
 void							handle_ar(char *);

@@ -6,19 +6,21 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/03/18 14:12:34 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/03/21 11:45:20 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ===== Editable =====
 NAME	:=	ft_nm
+EXTRA	:=	ft_otool
 INDEX	:=	1
 # ====================
 
 # ===== Standard =====
 CC		:=	gcc
 CFLAGS	:=	-Wall -Wextra -Werror -g -fsanitize=address
-SRCDIR	:=	src/
+SRCDIR	:=	src_nm/
+SRCDIR2	:=	src_otool/
 OBJDIR	:=	obj/
 INCDIR	:=	include/
 LIBDIR	:=	libft/
@@ -32,7 +34,20 @@ SRC		:=	$(SRCDIR)nm.c \
 			$(SRCDIR)clear_globals.c \
 			$(SRCDIR)swap_bytes.c \
 			$(SRCDIR)sort.c
-OBJ		:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
+SRC2	:=	$(SRCDIR2)otool.c \
+			$(SRCDIR2)main_otool.c \
+			$(SRCDIR2)handle_macho64o.c \
+			$(SRCDIR2)handle_macho32o.c \
+			$(SRCDIR)clear_globals.c \
+			$(SRCDIR)handle_ar.c \
+			$(SRCDIR2)handle_fat64.c \
+			$(SRCDIR2)handle_fat32.c \
+			$(SRCDIR)swap_bytes.c
+
+
+OBJ		:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o) $(SRC2:$(SRCDIR)%.c=$(OBJDIR)%.o)
+OBJ1	:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
+OBJ2	:=	$(SRC2:$(SRCDIR)%.c=$(OBJDIR)%.o)
 INC		:=	-I./$(INCDIR) -I./$(LIBDIR)$(INCDIR)
 LIBPATH	:=	-L./$(LIBDIR) -lft
 CACHEF	:=	.cache_exists
@@ -60,8 +75,10 @@ WHITE		= "\033[0;37m"
 all: $(NAME)
 
 $(NAME): libft $(OBJ)
-	$(CC) $(CFLAGS)  $(OBJ) -o $@ $(LIBPATH) $(LIB) $(INC)
+	$(CC) $(CFLAGS)  $(OBJ1) -o $@ $(LIBPATH) $(LIB) $(INC)
 	echo "\033[1;32m" "\n✓ $@ ok ;)" "\033[0m"
+	$(CC) $(CFLAGS)  $(OBJ2) -o $(EXTRA) $(LIBPATH) $(LIB) $(INC)
+	echo "\033[1;32m" "\n✓ $(EXTRA) ok ;)" "\033[0m"
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(CACHEF)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INC)

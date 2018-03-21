@@ -6,7 +6,7 @@
 /*   By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/13 13:52:37 by ataguiro          #+#    #+#             */
-/*   Updated: 2017/03/30 16:01:23 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/14 14:01:56 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct		s_itoa
 }					t_itoa;
 
 int					ft_isinstr(char c, char *str);
+void				ft_print_memory(void *ptr, size_t size);
 int					ft_count_words(char const *s, char c);
 int					*ft_datodi(char **tab);
 int					ft_readline(char *line, const int fd);
