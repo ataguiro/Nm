@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/03/21 11:45:20 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/03/21 14:51:16 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,7 @@ $(NAME): libft $(OBJ)
 $(OBJDIR)%.o: $(SRCDIR)%.c $(CACHEF)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 	printf "\r"
-	printf $(BGREEN)"[ compiling $(NAME)... ] "
+	printf $(BGREEN)"[ compiling objects... ] "
 	printf "$(shell echo 'scale=2;$(INDEX)/26 * 100' | bc)%%"$(EOC)
 	$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
@@ -109,6 +109,7 @@ clean:
 fclean: clean
 	make -C $(LIBDIR) fclean
 	rm -f $(NAME)
+	rm -f $(EXTRA)
 	printf $(RED)"$(NAME) removed\n"$(EOC)
 
 re: fclean all

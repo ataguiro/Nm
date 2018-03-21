@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 14:01:10 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/14 14:19:59 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/21 14:33:57 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	print_ascii(void *ptr, size_t size, size_t i)
 	}
 }
 
-void		ft_print_memory(void *ptr, size_t size)
+void		ft_print_memory(void *ptr, size_t size, size_t start)
 {
 	size_t	i;
 
@@ -41,7 +41,7 @@ void		ft_print_memory(void *ptr, size_t size)
 	while (i < size + ((size % C) ? (C - size % C) : 0))
 	{
 		if (i % C == 0)
-			ft_printf("0x%06x: ", i);
+			ft_printf("%016llx: ", start + i);
 		if (i < size)
 			ft_printf("%02x ", 0xff & ((char *)ptr)[i]);
 		else

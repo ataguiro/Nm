@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/21 11:17:46 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/21 14:15:52 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define T 0
 # define D 1
 # define B 2
+# define A 3
 
 /*
 ** Basic file types and errors

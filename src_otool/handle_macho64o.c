@@ -3,6 +3,31 @@
 
 int64_t	g_size;
 
+static void	otool_hexdump(void *ptr, size_t size, size_t start)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < size + ((size % 16) ? (16 - size % 16) : 0))
+	{
+		if (i % 16 == 0)
+			ft_printf("%016llx\t", start + i);
+		if (i < size)
+			ft_printf("%02x ", 0xff & ((char *)ptr)[i]);
+		if (i % 16 == (16 - 1))
+			ft_putchar('\n');
+		i++;
+	}
+}
+
+static void	print_dump(void *addr, size_t size, size_t start)
+{
+	if (ISON(options, A))
+		ft_print_memory(addr, size, start);
+	else
+		otool_hexdump(addr, size, start);
+}
+
 static void	parse_segments(t_parse p, char *ptr)
 {
 	int64_t				j;
@@ -16,15 +41,19 @@ static void	parse_segments(t_parse p, char *ptr)
 		if (!ft_strcmp((p.section64+j)->sectname, SECT_TEXT) \
 			&& !ft_strcmp((p.section64+j)->segname, SEG_TEXT) \
 			&& ISON(options, T))
-			ft_print_memory(ptr + (p.section64+j)->offset, (p.section64+j)->size);
+		{
+			ft_printf("Contents of (__TEXT,__text) section\n");
+			print_dump(ptr + (p.section64+j)->offset, (p.section64+j)->size, \
+					(p.section64+j)->addr);
+		}
 		else if (!ft_strcmp((p.section64+j)->sectname, SECT_DATA) \
 			&& !ft_strcmp((p.section64+j)->segname, SEG_DATA) \
 			&& ISON(options, D))
-			ft_print_memory(ptr + (p.section64+j)->offset, (p.section64+j)->size);
-		else if (!ft_strcmp((p.section64+j)->sectname, SECT_BSS) \
-			&& !ft_strcmp((p.section64+j)->segname, SEG_DATA) \
-			&& ISON(options, B))
-			ft_print_memory(ptr + (p.section64+j)->offset, (p.section64+j)->size);
+		{
+			ft_printf("Contents of (__DATA,__data) section\n");
+			print_dump(ptr + (p.section64+j)->offset, (p.section64+j)->size, \
+					(p.section64+j)->addr);
+		}
 	}
 }
 

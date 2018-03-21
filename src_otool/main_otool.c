@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/21 11:20:18 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/21 14:47:03 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ static void		distribute(char *element)
 				ADD_OPT(options, T);
 			else if (*element == 'd')
 				ADD_OPT(options, D);
-			else if (*element == 'b')
-				ADD_OPT(options, B);
+			else if (*element == 'A')
+				ADD_OPT(options, A);
 			else
 			{
 				ft_dprintf(2, "%s: '%c' option not recognized\n", \
@@ -96,15 +96,15 @@ static void		separate_options_and_files(char **av)
 int				main(int ac, char **av)
 {
 	t_files				*ptr;
-	uint8_t				multi;
 
-	av[ac] = NULL;
-	program = av[0];
+	program = av[ac ^ ac];
 	separate_options_and_files(av + 1);
 	ptr = g_files;
-	(!ptr) ? save_as_file("a.out") : 0;
-	ptr = g_files;
-	multi = (ptr->next) ? 1 : 0;
+	if (!ptr)
+	{
+		ft_printf("error: %s: at least one file must be specified\n", program);
+		exit(EXIT_FAILURE);
+	}
 	while (ptr)
 	{
 		if (ptr->type == DIRECTORY)
@@ -114,10 +114,7 @@ int				main(int ac, char **av)
 		else if (ptr->type == DOES_NOT_EXIST)
 			ft_dprintf(2, "%s: %s: No such file or directory.\n", program, ptr->filename);
 		else
-		{
-			multi ? ft_printf("\n%s:\n", ptr->filename) : 0;
 			otool(ptr->filename, ptr->size);
-		}
 		ptr = ptr->next;
 	}
 }
