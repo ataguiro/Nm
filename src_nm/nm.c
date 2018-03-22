@@ -6,11 +6,13 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/16 18:38:26 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/22 13:13:55 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
+
+t_check	g_check = {0, NULL};
 
 void	handle_file(char *data)
 {
@@ -46,6 +48,8 @@ void	nm(char *filename_local, size_t size)
 		return ;
 	}
 	close(fd);
+	g_check.data = data;
+	g_check.size = size;
 	filename = filename_local;
 	handle_file(data);
 }

@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 15:43:21 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/17 13:35:11 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/22 14:13:21 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void		sort(size_t n)
 	size_t				j;
 	t_symbols			tmp;
 
+	if (!g_symbols)
+		exit(EXIT_FAILURE);
 	if (ISON(options, P))
 		return ;
 	i = 1;

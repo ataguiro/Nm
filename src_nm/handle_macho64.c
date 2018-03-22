@@ -13,6 +13,7 @@ static void	parse_segments(t_parse p)
 			+ sizeof(struct segment_command_64));
 	while (++j < p.sc64->nsects)
 	{
+		check(p.section64 + j);
 		if (!ft_strcmp((p.section64+j)->sectname, SECT_TEXT)
 			&& !ft_strcmp((p.section64+j)->segname, SEG_TEXT))
 			g_segments.text = g_segments.k + 1;
@@ -33,13 +34,16 @@ static void	parse_symbols(t_parse p, char *ptr)
 	j = -1;
 	p.sym = (struct symtab_command *)p.lc;
 	g_symbols = (t_symbols *)malloc(sizeof(t_symbols) * (p.sym->nsyms + 1));
+	if (!g_symbols)
+		exit(EXIT_FAILURE);
 	p.array64 = (void *)ptr + p.sym->symoff;
 	g_size = p.sym->nsyms;
 	while (++j < g_size)
 	{
 		g_symbols[j].value = p.array64[j].n_value;
-		g_symbols[j].name = ((void *)ptr + p.sym->stroff) \
+		g_symbols[j].name = check(((void *)ptr + p.sym->stroff)) \
 			+ p.array64[j].n_un.n_strx;
+		check(g_symbols[j].name);
 		g_symbols[j].type = p.array64[j].n_type;
 		g_symbols[j].sect = p.array64[j].n_sect;
 	}
@@ -112,7 +116,7 @@ void		handle_macho64(char *ptr)
 			parse_segments(p);
 		if (p.lc->cmd == LC_SYMTAB)
 			parse_symbols(p, ptr);
-		p.lc = (void *)p.lc + p.lc->cmdsize;
+		check(p.lc = (void *)p.lc + p.lc->cmdsize);
 	}
 	print_symbols(ISON(options, O));
 	clear_globals();

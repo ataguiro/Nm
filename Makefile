@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/03/21 14:51:16 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/03/22 14:39:59 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ SRC		:=	$(SRCDIR)nm.c \
 			$(SRCDIR)handle_ar.c \
 			$(SRCDIR)clear_globals.c \
 			$(SRCDIR)swap_bytes.c \
-			$(SRCDIR)sort.c
+			$(SRCDIR)sort.c \
+			$(SRCDIR)check.c
 SRC2	:=	$(SRCDIR2)otool.c \
 			$(SRCDIR2)main_otool.c \
 			$(SRCDIR2)handle_macho64o.c \
@@ -109,7 +110,7 @@ clean:
 fclean: clean
 	make -C $(LIBDIR) fclean
 	rm -f $(NAME)
-	rm -f $(EXTRA)
+	rm -rf $(EXTRA) $(EXTRA).dSYM
 	printf $(RED)"$(NAME) removed\n"$(EOC)
 
 re: fclean all

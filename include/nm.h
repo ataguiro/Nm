@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/21 14:15:52 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/22 13:55:54 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,18 @@ typedef struct					s_files
 	uint8_t						type;
 }								t_files;
 
+/*
+** The only purpose of this structure is to check file curruption
+*/
+
+typedef struct					s_check
+{
+	size_t						size;
+	void						*data;
+}								t_check;
+
+extern t_check					g_check;
+
 extern t_segments				g_segments;
 extern t_symbols				*g_symbols;
 extern t_files					*g_files;
@@ -114,6 +126,8 @@ extern char						*filename;
 
 void							nm(char *, size_t);
 void							otool(char *, size_t);
+
+void							*check(void *ptr);
 
 void							handle_file(char *);
 void							handle_fileo(char *);
