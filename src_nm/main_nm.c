@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/17 13:36:26 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/28 15:00:36 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char		*filename = NULL;
 t_files		*g_files = NULL;
 t_symbols	*g_symbols = NULL;
 uint8_t		options = 0;
+uint8_t		g_multi;
 
 static uint8_t	get_file_type(char *element, t_files *ptr)
 {
@@ -100,7 +101,6 @@ static void		separate_options_and_files(char **av)
 int				main(int ac, char **av)
 {
 	t_files				*ptr;
-	uint8_t				multi;
 
 	av[ac] = NULL;
 	program = av[0];
@@ -108,7 +108,7 @@ int				main(int ac, char **av)
 	ptr = g_files;
 	(!ptr) ? save_as_file("a.out") : 0;
 	ptr = g_files;
-	multi = (ptr->next) ? 1 : 0;
+	g_multi = (ptr->next) ? 1 : 0;
 	while (ptr)
 	{
 		if (ptr->type == DIRECTORY)
@@ -118,10 +118,7 @@ int				main(int ac, char **av)
 		else if (ptr->type == DOES_NOT_EXIST)
 			ft_dprintf(2, "%s: %s: No such file or directory.\n", program, ptr->filename);
 		else
-		{
-			multi ? ft_printf("\n%s:\n", ptr->filename) : 0;
 			nm(ptr->filename, ptr->size);
-		}
 		ptr = ptr->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/22 13:55:54 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/28 15:00:18 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ extern uint8_t					options;
 
 extern char						*program;
 extern char						*filename;
+extern uint8_t					g_multi;
 
 void							nm(char *, size_t);
 void							otool(char *, size_t);

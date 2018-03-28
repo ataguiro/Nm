@@ -102,8 +102,10 @@ void		handle_macho32(char *ptr)
 	uint32_t	i;
 
 	i = 0;
+	g_segments.k = 0;
 	p.header = (struct mach_header *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header);
+	g_multi ? ft_printf("\n%s:\n", filename) : 0;
 	while (i++ < p.header->ncmds)
 	{
 		if (p.lc->cmd == LC_SEGMENT)
