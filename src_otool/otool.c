@@ -6,11 +6,13 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/29 17:15:57 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/29 17:36:11 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
+
+t_check	g_check = {0, NULL};
 
 void	handle_fileo(char *data)
 {
@@ -49,6 +51,8 @@ void	otool(char *filename_local, size_t size)
 		return ;
 	}
 	close(fd);
+	g_check.data = data;
+	g_check.size = size;
 	filename = filename_local;
 	handle_fileo(data);
 }

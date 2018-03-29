@@ -1,7 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_macho64o.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/29 17:20:00 by ataguiro          #+#    #+#             */
+/*   Updated: 2018/03/29 17:33:59 by ataguiro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "nm.h"
 #define DO_MASK(type) (type & N_TYPE)
+#define PPC(x) (ppc ? swap_uint64(x) : x)
+#define ARCH (ppc ? "(for architecture ppc64)" : "(for architecture x86_64)")
 
 int64_t	g_size;
+uint8_t	ppc;
 
 static void	otool_hexdump(void *ptr, size_t size, size_t start)
 {
@@ -36,8 +51,9 @@ static void	parse_segments(t_parse p, char *ptr)
 	p.sc64 = (struct segment_command_64 *)p.lc;
 	p.section64 = (struct section_64 *)((char *)p.sc64 \
 			+ sizeof(struct segment_command_64));
-	while (++j < p.sc64->nsects)
+	while (++j < (int64_t)PPC(p.sc64->nsects))
 	{
+		check(p.section64 + j);
 		if (!ft_strcmp((p.section64+j)->sectname, SECT_TEXT) \
 			&& !ft_strcmp((p.section64+j)->segname, SEG_TEXT) \
 			&& ISON(options, T))
@@ -65,12 +81,17 @@ void		handle_macho64o(char *ptr)
 	i = 0;
 	p.header64 = (struct mach_header_64 *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header_64);
-	ft_printf("%s:\n", filename);
-	while (i++ < p.header64->ncmds)
+	ppc = swap_uint64(p.header64->cputype) == CPU_TYPE_POWERPC64;
+	if ((p.header64->cputype) != CPU_TYPE_X86_64 && !ppc)
+		return ;
+	if (g_multi == 3)
+		ft_printf("%s %s:\n", filename, ARCH);
+	else
+		ft_printf("%s:\n", filename, ARCH);
+	while (i++ < PPC(p.header64->ncmds))
 	{
-		if (p.lc->cmd == LC_SEGMENT_64)
+		if (PPC(p.lc->cmd) == LC_SEGMENT_64)
 			parse_segments(p, ptr);
-		p.lc = (void *)p.lc + p.lc->cmdsize;
+		p.lc = check((void *)p.lc + PPC(p.lc->cmdsize));
 	}
-	clear_globals();
 }
