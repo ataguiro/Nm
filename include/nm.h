@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/29 18:50:07 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/29 20:09:49 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # include <sys/mman.h>
 
-#include <sys/stat.h>
+# include <sys/stat.h>
 
 # include "libft.h"
 
@@ -119,27 +119,27 @@ extern t_check					g_check;
 extern t_segments				g_segments;
 extern t_symbols				*g_symbols;
 extern t_files					*g_files;
-extern uint8_t					options;
+extern uint8_t					g_options;
 
-extern char						*program;
-extern char						*filename;
+extern char						*g_program;
+extern char						*g_filename;
 extern uint8_t					g_multi;
 
-void							nm(char *, size_t);
-void							otool(char *, size_t);
+void							nm(char *ptr, size_t n);
+void							otool(char *ptr, size_t n);
 
 void							*check(void *ptr);
 
-void							handle_file(char *);
-void							handle_fileo(char *);
+void							handle_file(char *ptr);
+void							handle_fileo(char *ptr);
 
-void							handle_macho32(char *);
-void							handle_macho32o(char *);
-void							handle_macho64(char *);
-void							handle_macho64o(char *);
-void							handle_fat32(char *);
-void							handle_fat64(char *);
-void							handle_ar(char *);
+void							handle_macho32(char *ptr);
+void							handle_macho32o(char *ptr);
+void							handle_macho64(char *ptr);
+void							handle_macho64o(char *ptr);
+void							handle_fat32(char *ptr);
+void							handle_fat64(char *ptr);
+void							handle_ar(char *ptr);
 
 void							clear_globals(void);
 

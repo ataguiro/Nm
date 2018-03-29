@@ -6,18 +6,18 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/29 16:06:26 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/29 20:19:19 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
 
 t_segments	g_segments = {0, 0, 0, 0};
-char		*program = NULL;
-char		*filename = NULL;
+char		*g_program = NULL;
+char		*g_filename = NULL;
 t_files		*g_files = NULL;
 t_symbols	*g_symbols = NULL;
-uint8_t		options = 0;
+uint8_t		g_options = 0;
 uint8_t		g_multi;
 uint8_t		g_oldmulti;
 
@@ -69,19 +69,19 @@ static void		distribute(char *element)
 		while (*(++element))
 		{
 			if (*element == 'n')
-				ADD_OPT(options, N);
+				ADD_OPT(g_options, N);
 			else if (*element == 'r')
-				ADD_OPT(options, R);
+				ADD_OPT(g_options, R);
 			else if (*element == 'j')
-				ADD_OPT(options, J);
+				ADD_OPT(g_options, J);
 			else if (*element == 'o')
-				ADD_OPT(options, O);
+				ADD_OPT(g_options, O);
 			else if (*element == 'p')
-				ADD_OPT(options, P);
+				ADD_OPT(g_options, P);
 			else
 			{
 				ft_dprintf(2, "%s: '%c' option not recognized\n", \
-						program, *element);
+						g_program, *element);
 				exit(EXIT_FAILURE);
 			}
 		}
@@ -90,7 +90,7 @@ static void		distribute(char *element)
 		save_as_file(element);
 }
 
-static void		separate_options_and_files(char **av)
+static void		separate_g_options_and_files(char **av)
 {
 	while (*av)
 	{
@@ -104,8 +104,8 @@ int				main(int ac, char **av)
 	t_files				*ptr;
 
 	av[ac] = NULL;
-	program = av[0];
-	separate_options_and_files(av + 1);
+	g_program = av[0];
+	separate_g_options_and_files(av + 1);
 	ptr = g_files;
 	(!ptr) ? save_as_file("a.out") : 0;
 	ptr = g_files;
@@ -114,11 +114,11 @@ int				main(int ac, char **av)
 	while (ptr)
 	{
 		if (ptr->type == DIRECTORY)
-			ft_dprintf(2, "%s: %s: Is a directory.\n", program, ptr->filename);
+			ft_dprintf(2, "%s: %s: Is a directory.\n", g_program, ptr->filename);
 		else if (ptr->type == NO_PERMISSION)
-			ft_dprintf(2, "%s: %s: Permission denied.\n", program, ptr->filename);
+			ft_dprintf(2, "%s: %s: Permission denied.\n", g_program, ptr->filename);
 		else if (ptr->type == DOES_NOT_EXIST)
-			ft_dprintf(2, "%s: %s: No such file or directory.\n", program, ptr->filename);
+			ft_dprintf(2, "%s: %s: No such file or directory.\n", g_program, ptr->filename);
 		else
 			nm(ptr->filename, ptr->size);
 		ptr = ptr->next;

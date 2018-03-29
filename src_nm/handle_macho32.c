@@ -83,13 +83,13 @@ static void	print_symbols(uint8_t o)
 
 	i = -1;
 	sort(g_size);
-	flag = ISON(options, J);
+	flag = ISON(g_options, J);
 	while (g_symbols[++i].name)
 	{
 		c = get_type(g_symbols[i].type, g_symbols[i].value, g_symbols[i].sect);
 		if ((c == '-' || c == 'u') || !ft_strcmp(g_symbols[i].name, ""))
 			continue ;
-		o ? ft_printf("%s: ", filename) : 0;
+		o ? ft_printf("%s: ", g_filename) : 0;
 		if (!flag)
 		{
 			if (c == 'U')
@@ -115,9 +115,9 @@ void		handle_macho32(char *ptr)
 	ppc = swap_uint32(p.header->cputype) == CPU_TYPE_POWERPC;
 	if ((p.header->cputype) != CPU_TYPE_I386 && !ppc)
 		return ;
-	g_multi == 1 ? ft_printf("\n%s:\n", filename) : 0;
-	g_multi == 3 ? ft_printf("\n%s %s:\n", filename, ARCH) : 0;
-	g_multi == 2 ? ft_printf("%s:\n", filename, ARCH) : 0;
+	g_multi == 1 ? ft_printf("\n%s:\n", g_filename) : 0;
+	g_multi == 3 ? ft_printf("\n%s %s:\n", g_filename, ARCH) : 0;
+	g_multi == 2 ? ft_printf("%s:\n", g_filename, ARCH) : 0;
 	while (i++ < PPC(p.header->ncmds))
 	{
 		if (PPC(p.lc->cmd) == LC_SEGMENT)
@@ -126,6 +126,6 @@ void		handle_macho32(char *ptr)
 			parse_symbols(p, ptr);
 		p.lc = check((void *)p.lc + PPC(p.lc->cmdsize));
 	}
-	print_symbols(ISON(options, O));
+	print_symbols(ISON(g_options, O));
 	clear_globals();
 }

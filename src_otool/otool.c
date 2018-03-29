@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/29 17:36:11 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/29 20:22:53 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_fileo(char *data)
 	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
 		handle_fat64(data);
 	else
-		ft_dprintf(2, "%s: %s: is not an object file\n", program, filename);
+		ft_dprintf(2, "%s: %s: is not an object file\n", g_program, g_filename);
 }
 
 void	otool(char *filename_local, size_t size)
@@ -38,21 +38,21 @@ void	otool(char *filename_local, size_t size)
 	int		fd;
 	char	*data;
 
-	if (!ISON(options, T) && !ISON(options, D))
+	if (!ISON(g_options, T) && !ISON(g_options, D))
 	{
-		ft_printf("error: %s: one of -td must be specified\n", program);
+		ft_printf("error: %s: one of -td must be specified\n", g_program);
 		exit(EXIT_FAILURE);
 	}
 	fd = open(filename_local, O_RDONLY);
 	if (MAP_FAILED == (data = mmap(0, size, PROT_READ, \
 		MAP_PRIVATE, fd, 0)))
 	{
-		ft_dprintf(2, "%s: mmap() call failed.\n", program);
+		ft_dprintf(2, "%s: mmap() call failed.\n", g_program);
 		return ;
 	}
 	close(fd);
 	g_check.data = data;
 	g_check.size = size;
-	filename = filename_local;
+	g_filename = filename_local;
 	handle_fileo(data);
 }

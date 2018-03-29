@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:20:00 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/29 17:50:06 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/29 20:23:46 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	otool_hexdump(void *ptr, size_t size, size_t start)
 
 static void	print_dump(void *addr, size_t size, size_t start)
 {
-	if (ISON(options, A))
+	if (ISON(g_options, A))
 		ft_print_memory(addr, size, start);
 	else
 		otool_hexdump(addr, size, start);
@@ -60,7 +60,7 @@ static void	parse_segments(t_parse p, char *ptr)
 		check(p.section + j);
 		if (!ft_strcmp((p.section+j)->sectname, SECT_TEXT) \
 			&& !ft_strcmp((p.section+j)->segname, SEG_TEXT) \
-			&& ISON(options, T))
+			&& ISON(g_options, T))
 		{
 			ft_printf("Contents of (__TEXT,__text) section\n");
 			print_dump(ptr + PPC((p.section+j)->offset), PPC((p.section+j)->size), \
@@ -68,7 +68,7 @@ static void	parse_segments(t_parse p, char *ptr)
 		}
 		else if (!ft_strcmp((p.section+j)->sectname, SECT_DATA) \
 			&& !ft_strcmp((p.section+j)->segname, SEG_DATA) \
-			&& ISON(options, D))
+			&& ISON(g_options, D))
 		{
 			ft_printf("Contents of (__DATA,__data) section\n");
 			print_dump(ptr + PPC((p.section+j)->offset), PPC((p.section+j)->size), \
@@ -89,9 +89,9 @@ void		handle_macho32o(char *ptr)
 	if ((p.header->cputype) != CPU_TYPE_I386 && !ppc)
 		return ;
 	if (g_multi == 3)
-		ft_printf("%s %s:\n", filename, ARCH);
+		ft_printf("%s %s:\n", g_filename, ARCH);
 	else
-		ft_printf("%s:\n", filename, ARCH);
+		ft_printf("%s:\n", g_filename, ARCH);
 	while (i++ < PPC(p.header->ncmds))
 	{
 		if (PPC(p.lc->cmd) == LC_SEGMENT)

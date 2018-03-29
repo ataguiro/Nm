@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/29 15:59:57 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/29 20:11:00 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_file(char *data)
 	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
 		handle_fat64(data);
 	else
-		ft_dprintf(2, "%s: %s The file was not recognized as a valid object file\n\n", program, filename);
+		ft_dprintf(2, "%s: %s The file was not recognized as a valid object file\n\n", g_program, g_filename);
 }
 
 void	nm(char *filename_local, size_t size)
@@ -42,12 +42,12 @@ void	nm(char *filename_local, size_t size)
 	if (MAP_FAILED == (data = mmap(0, size, PROT_READ, \
 		MAP_PRIVATE, fd, 0)))
 	{
-		ft_dprintf(2, "%s: mmap() call failed.\n", program);
+		ft_dprintf(2, "%s: mmap() call failed.\n", g_program);
 		return ;
 	}
 	close(fd);
 	g_check.data = data;
 	g_check.size = size;
-	filename = filename_local;
+	g_filename = filename_local;
 	handle_file(data);
 }

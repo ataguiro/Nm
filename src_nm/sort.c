@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 15:43:21 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/22 14:13:21 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/29 20:13:13 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ static int	compare(t_symbols a, t_symbols b)
 	int		ret;
 	int		num_mode;
 
-	num_mode = ISON(options, N);
+	num_mode = ISON(g_options, N);
 	if (num_mode)
 		ret = (a.value > b.value);
 	else
 		ret = ft_strcmp(a.name, b.name);
 	if (!ret)
 		ret = (a.value > b.value);
-	if (ISON(options, R))
+	if (ISON(g_options, R))
 		ret = (num_mode || !ret) ? !ret : -ret;
 	return (ret);
 }
@@ -37,7 +37,7 @@ void		sort(size_t n)
 
 	if (!g_symbols)
 		exit(EXIT_FAILURE);
-	if (ISON(options, P))
+	if (ISON(g_options, P))
 		return ;
 	i = 1;
 	while (i <= n - 1)
