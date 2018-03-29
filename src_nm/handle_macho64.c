@@ -90,7 +90,7 @@ static void	print_symbols(uint8_t o)
 		o ? ft_printf("%s: ", filename) : 0;
 		if (!flag)
 		{
-			if (!g_symbols[i].value && !ft_isinstr(c, "TDB"))
+			if (c == 'U')
 				ft_printf("%16s", " ");
 			else
 				ft_printf("%016llx", g_symbols[i].value);

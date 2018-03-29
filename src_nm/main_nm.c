@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/29 12:01:32 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/29 16:06:26 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_files		*g_files = NULL;
 t_symbols	*g_symbols = NULL;
 uint8_t		options = 0;
 uint8_t		g_multi;
+uint8_t		g_oldmulti;
 
 static uint8_t	get_file_type(char *element, t_files *ptr)
 {
@@ -109,6 +110,7 @@ int				main(int ac, char **av)
 	(!ptr) ? save_as_file("a.out") : 0;
 	ptr = g_files;
 	g_multi = (ptr->next) ? 1 : 0;
+	g_oldmulti = g_multi;
 	while (ptr)
 	{
 		if (ptr->type == DIRECTORY)
@@ -120,5 +122,6 @@ int				main(int ac, char **av)
 		else
 			nm(ptr->filename, ptr->size);
 		ptr = ptr->next;
+		g_multi = g_oldmulti;
 	}
 }

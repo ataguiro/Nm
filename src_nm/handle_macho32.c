@@ -1,7 +1,10 @@
 #include "nm.h"
 #define DO_MASK(type) (type & N_TYPE)
+#define PPC(x) (ppc ? swap_uint32(x) : x)
+#define ARCH (ppc ? "(for architecture ppc)" : "(for architecture i386)")
 
 size_t	g_size;
+uint8_t	ppc;
 
 static void	parse_segments(t_parse p)
 {
@@ -11,8 +14,9 @@ static void	parse_segments(t_parse p)
 	p.sc = (struct segment_command *)p.lc;
 	p.section = (struct section *)((char *)p.sc \
 			+ sizeof(struct segment_command));
-	while (++j < p.sc->nsects)
+	while (++j < PPC(p.sc->nsects))
 	{
+		check(p.section + j);
 		if (!ft_strcmp((p.section+j)->sectname, SECT_TEXT)
 			&& !ft_strcmp((p.section+j)->segname, SEG_TEXT))
 			g_segments.text = g_segments.k + 1;
@@ -32,14 +36,17 @@ static void	parse_symbols(t_parse p, char *ptr)
 
 	j = -1;
 	p.sym = (struct symtab_command *)p.lc;
-	g_symbols = (t_symbols *)malloc(sizeof(t_symbols) * (p.sym->nsyms + 1));
-	p.array = (void *)ptr + p.sym->symoff;
-	g_size = p.sym->nsyms;
-	while (++j < p.sym->nsyms)
+	g_symbols = (t_symbols *)malloc(sizeof(t_symbols) * (PPC(p.sym->nsyms) + 1));
+	if (!g_symbols)
+		exit(EXIT_FAILURE);
+	p.array = (void *)ptr + PPC(p.sym->symoff);
+	g_size = PPC(p.sym->nsyms);
+	while (++j < (int64_t)g_size)
 	{
-		g_symbols[j].value = p.array[j].n_value;
-		g_symbols[j].name = ((void *)ptr + p.sym->stroff) \
-			+ p.array[j].n_un.n_strx;
+		g_symbols[j].value = PPC(p.array[j].n_value);
+		g_symbols[j].name = check((void *)ptr + PPC(p.sym->stroff)) \
+			+ PPC(p.array[j].n_un.n_strx);
+		check(g_symbols[j].name);
 		g_symbols[j].type = p.array[j].n_type;
 		g_symbols[j].sect = p.array[j].n_sect;
 	}
@@ -85,7 +92,7 @@ static void	print_symbols(uint8_t o)
 		o ? ft_printf("%s: ", filename) : 0;
 		if (!flag)
 		{
-			if (!g_symbols[i].value)
+			if (c == 'U')
 				ft_printf("%8s", " ");
 			else
 				ft_printf("%08llx", g_symbols[i].value);
@@ -105,14 +112,19 @@ void		handle_macho32(char *ptr)
 	g_segments.k = 0;
 	p.header = (struct mach_header *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header);
-	g_multi ? ft_printf("\n%s:\n", filename) : 0;
-	while (i++ < p.header->ncmds)
+	ppc = swap_uint32(p.header->cputype) == CPU_TYPE_POWERPC;
+	if ((p.header->cputype) != CPU_TYPE_I386 && !ppc)
+		return ;
+	g_multi == 1 ? ft_printf("\n%s:\n", filename) : 0;
+	g_multi == 3 ? ft_printf("\n%s %s:\n", filename, ARCH) : 0;
+	g_multi == 2 ? ft_printf("%s:\n", filename, ARCH) : 0;
+	while (i++ < PPC(p.header->ncmds))
 	{
-		if (p.lc->cmd == LC_SEGMENT)
+		if (PPC(p.lc->cmd) == LC_SEGMENT)
 			parse_segments(p);
-		if (p.lc->cmd == LC_SYMTAB)
+		if (PPC(p.lc->cmd) == LC_SYMTAB)
 			parse_symbols(p, ptr);
-		p.lc = (void *)p.lc + p.lc->cmdsize;
+		p.lc = check((void *)p.lc + PPC(p.lc->cmdsize));
 	}
 	print_symbols(ISON(options, O));
 	clear_globals();

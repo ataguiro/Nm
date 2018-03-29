@@ -6,12 +6,11 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 14:34:13 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/29 11:54:00 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/29 16:05:44 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
-
 
 static int	is_hostarch(cpu_type_t type)
 {
@@ -37,9 +36,11 @@ static void	set_multi(t_parse p, uint32_t n)
 	}
 	if (i > 0)
 		g_multi = 2;
+	if (i > 1)
+		g_multi = 3;
 }
 
-static void	redistribute(cpu_type_t type, char *ptr)
+static int	redistribute(cpu_type_t type, char *ptr)
 {
 	cpu_type_t	tmp;
 
@@ -47,10 +48,14 @@ static void	redistribute(cpu_type_t type, char *ptr)
 	if (!g_multi)
 	{
 		if (is_hostarch(tmp))
+		{
 			handle_file(ptr);
+			return (0);
+		}
 	}
 	else
 		handle_file(ptr);
+	return (1);
 }
 
 void		handle_fat32(char *ptr)
@@ -68,6 +73,7 @@ void		handle_fat32(char *ptr)
 	while (++i < n)
 	{
 		offset = swap_uint32(p.fatarch[i].offset);
-		redistribute(p.fatarch[i].cputype, ptr + offset);
+		if (!redistribute(p.fatarch[i].cputype, ptr + offset))
+			return ;
 	}
 }
