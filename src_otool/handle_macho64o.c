@@ -65,6 +65,7 @@ void		handle_macho64o(char *ptr)
 	i = 0;
 	p.header64 = (struct mach_header_64 *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header_64);
+	ft_printf("%s:\n", filename);
 	while (i++ < p.header64->ncmds)
 	{
 		if (p.lc->cmd == LC_SEGMENT_64)

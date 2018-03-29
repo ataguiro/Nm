@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/03/22 14:39:59 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/03/29 16:49:54 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ INDEX	:=	1
 
 # ===== Standard =====
 CC		:=	gcc
-CFLAGS	:=	-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS	:=	-Wall -Wextra -Werror #-g -fsanitize=address
 SRCDIR	:=	src_nm/
 SRCDIR2	:=	src_otool/
 OBJDIR	:=	obj/

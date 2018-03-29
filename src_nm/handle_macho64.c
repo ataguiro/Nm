@@ -1,7 +1,10 @@
 #include "nm.h"
 #define DO_MASK(type) (type & N_TYPE)
+#define PPC(x) (ppc ? swap_uint64(x) : x)
+#define ARCH (ppc ? "(for architecture ppc64)" : "(for architecture x86_64)")
 
 int64_t	g_size;
+uint8_t	ppc;
 
 static void	parse_segments(t_parse p)
 {
@@ -33,16 +36,17 @@ static void	parse_symbols(t_parse p, char *ptr)
 
 	j = -1;
 	p.sym = (struct symtab_command *)p.lc;
-	g_symbols = (t_symbols *)malloc(sizeof(t_symbols) * (p.sym->nsyms + 1));
+	g_symbols = (t_symbols *)malloc(sizeof(t_symbols) \
+			* (PPC(p.sym->nsyms) + 1));
 	if (!g_symbols)
 		exit(EXIT_FAILURE);
-	p.array64 = (void *)ptr + p.sym->symoff;
-	g_size = p.sym->nsyms;
+	p.array64 = (void *)ptr + PPC(p.sym->symoff);
+	g_size = PPC(p.sym->nsyms);
 	while (++j < g_size)
 	{
-		g_symbols[j].value = p.array64[j].n_value;
-		g_symbols[j].name = check(((void *)ptr + p.sym->stroff)) \
-			+ p.array64[j].n_un.n_strx;
+		g_symbols[j].value = PPC(p.array64[j].n_value);
+		g_symbols[j].name = check(((void *)ptr + PPC(p.sym->stroff))) \
+			+ PPC(p.array64[j].n_un.n_strx);
 		check(g_symbols[j].name);
 		g_symbols[j].type = p.array64[j].n_type;
 		g_symbols[j].sect = p.array64[j].n_sect;
@@ -110,14 +114,19 @@ void		handle_macho64(char *ptr)
 	g_segments.k = 0;
 	p.header64 = (struct mach_header_64 *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header_64);
-	g_multi ? ft_printf("\n%s:\n", filename) : 0;
-	while (i++ < p.header64->ncmds)
+	ppc = swap_uint64(p.header64->cputype) == CPU_TYPE_POWERPC64;
+	if ((p.header64->cputype) != CPU_TYPE_X86_64 && !ppc)
+		return ;
+	g_multi == 1 ? ft_printf("\n%s:\n", filename) : 0;
+	g_multi == 3 ? ft_printf("\n%s %s:\n", filename, ARCH) : 0;
+	g_multi == 2 ? ft_printf("%s:\n", filename, ARCH) : 0;
+	while (i++ < PPC(p.header64->ncmds))
 	{
-		if (p.lc->cmd == LC_SEGMENT_64)
+		if (PPC(p.lc->cmd) == LC_SEGMENT_64)
 			parse_segments(p);
-		if (p.lc->cmd == LC_SYMTAB)
+		if (PPC(p.lc->cmd) == LC_SYMTAB)
 			parse_symbols(p, ptr);
-		check(p.lc = (void *)p.lc + p.lc->cmdsize);
+		check(p.lc = (void *)p.lc + PPC(p.lc->cmdsize));
 	}
 	print_symbols(ISON(options, O));
 	clear_globals();

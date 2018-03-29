@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/21 14:47:03 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/29 17:11:23 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char		*filename = NULL;
 t_files		*g_files = NULL;
 t_symbols	*g_symbols = NULL;
 uint8_t		options = 0;
+uint8_t		g_multi = 0;
 
 static uint8_t	get_file_type(char *element, t_files *ptr)
 {

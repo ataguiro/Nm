@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nm.c                                               :+:      :+:    :+:   */
+/*   otool.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/21 14:50:19 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/29 17:15:57 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	otool(char *filename_local, size_t size)
 		ft_printf("error: %s: one of -td must be specified\n", program);
 		exit(EXIT_FAILURE);
 	}
-	ft_printf("%s:\n", filename_local);
 	fd = open(filename_local, O_RDONLY);
 	if (MAP_FAILED == (data = mmap(0, size, PROT_READ, \
 		MAP_PRIVATE, fd, 0)))
