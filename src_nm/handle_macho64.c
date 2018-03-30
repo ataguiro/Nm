@@ -8,7 +8,7 @@ uint8_t	ppc;
 
 static void	parse_segments(t_parse p)
 {
-	int64_t				j;
+	int64_t	j;
 
 	j = -1;
 	p.sc64 = (struct segment_command_64 *)p.lc;
@@ -79,9 +79,9 @@ static char	get_type(uint8_t type, uint64_t value, uint8_t sect)
 
 static void	print_symbols(uint8_t o)
 {
-	int64_t		i;
-	uint8_t		flag;
-	char		c;
+	int64_t	i;
+	uint8_t	flag;
+	char	c;
 
 	i = -1;
 	sort(g_size);

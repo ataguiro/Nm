@@ -6,20 +6,23 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/29 20:19:19 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/30 18:07:34 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
+#define _D "%s: %s: Is a directory.\n"
+#define _P "%s: %s: Permission denied.\n"
+#define _N "%s: %s: No such file or directory.\n"
 
-t_segments	g_segments = {0, 0, 0, 0};
-char		*g_program = NULL;
-char		*g_filename = NULL;
-t_files		*g_files = NULL;
-t_symbols	*g_symbols = NULL;
-uint8_t		g_options = 0;
-uint8_t		g_multi;
-uint8_t		g_oldmulti;
+t_segments		g_segments = {0, 0, 0, 0};
+char			*g_program = NULL;
+char			*g_filename = NULL;
+t_files			*g_files = NULL;
+t_symbols		*g_symbols = NULL;
+uint8_t			g_options = 0;
+uint8_t			g_multi;
+uint8_t			g_oldmulti;
 
 static uint8_t	get_file_type(char *element, t_files *ptr)
 {
@@ -101,7 +104,7 @@ static void		separate_g_options_and_files(char **av)
 
 int				main(int ac, char **av)
 {
-	t_files				*ptr;
+	t_files	*ptr;
 
 	av[ac] = NULL;
 	g_program = av[0];
@@ -114,11 +117,11 @@ int				main(int ac, char **av)
 	while (ptr)
 	{
 		if (ptr->type == DIRECTORY)
-			ft_dprintf(2, "%s: %s: Is a directory.\n", g_program, ptr->filename);
+			ft_dprintf(2, _D, g_program, ptr->filename);
 		else if (ptr->type == NO_PERMISSION)
-			ft_dprintf(2, "%s: %s: Permission denied.\n", g_program, ptr->filename);
+			ft_dprintf(2, _P, g_program, ptr->filename);
 		else if (ptr->type == DOES_NOT_EXIST)
-			ft_dprintf(2, "%s: %s: No such file or directory.\n", g_program, ptr->filename);
+			ft_dprintf(2, _N, g_program, ptr->filename);
 		else
 			nm(ptr->filename, ptr->size);
 		ptr = ptr->next;

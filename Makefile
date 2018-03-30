@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/03/29 18:45:10 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/03/30 15:55:51 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,7 @@ $(NAME): libft $(OBJ)
 	echo "\033[1;32m" "\n✓ $@ ok ;)" "\033[0m"
 	$(CC) $(CFLAGS)  $(OBJ2) -o $(EXTRA) $(LIBPATH) $(LIB) $(INC)
 	echo "\033[1;32m" "\n✓ $(EXTRA) ok ;)" "\033[0m"
+	rm -rf $(EXTRA).dSYM
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(CACHEF)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INC)

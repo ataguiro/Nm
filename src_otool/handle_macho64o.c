@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:20:00 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/29 20:23:21 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/30 18:26:03 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,14 @@ static void	otool_hexdump(void *ptr, size_t size, size_t start)
 	while (i < size + ((size % 16) ? (16 - size % 16) : 0))
 	{
 		if (i % 16 == 0)
-			ft_printf("%016llx\t", start + i);
+			ft_printf("%08llx\t", start + i);
 		if (i < size)
-			ft_printf("%02x ", 0xff & ((char *)ptr)[i]);
-		if (i % 16 == (16 - 1))
+			ft_printf("%02x", 0xff & ((char *)ptr)[i]);
+		if (!ppc && i < size)
+			ft_putchar(' ');
+		if (ppc && (i % 4 == 3) && i < size)
+			ft_putchar(' ');
+		if (i % 16 == 15)
 			ft_putchar('\n');
 		i++;
 	}
@@ -45,7 +49,7 @@ static void	print_dump(void *addr, size_t size, size_t start)
 
 static void	parse_segments(t_parse p, char *ptr)
 {
-	int64_t				j;
+	int64_t	j;
 
 	j = -1;
 	p.sc64 = (struct segment_command_64 *)p.lc;
@@ -59,16 +63,16 @@ static void	parse_segments(t_parse p, char *ptr)
 			&& ISON(g_options, T))
 		{
 			ft_printf("Contents of (__TEXT,__text) section\n");
-			print_dump(ptr + (p.section64+j)->offset, (p.section64+j)->size, \
-					(p.section64+j)->addr);
+			print_dump(ptr + PPC((p.section64+j)->offset), \
+					PPC((p.section64+j)->size), PPC((p.section64+j)->addr));
 		}
 		else if (!ft_strcmp((p.section64+j)->sectname, SECT_DATA) \
 			&& !ft_strcmp((p.section64+j)->segname, SEG_DATA) \
 			&& ISON(g_options, D))
 		{
 			ft_printf("Contents of (__DATA,__data) section\n");
-			print_dump(ptr + (p.section64+j)->offset, (p.section64+j)->size, \
-					(p.section64+j)->addr);
+			print_dump(ptr + PPC((p.section64+j)->offset), \
+					PPC((p.section64+j)->size), PPC((p.section64+j)->addr));
 		}
 	}
 }

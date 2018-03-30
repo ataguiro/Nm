@@ -8,7 +8,7 @@ uint8_t	ppc;
 
 static void	parse_segments(t_parse p)
 {
-	int64_t				j;
+	int64_t	j;
 
 	j = -1;
 	p.sc = (struct segment_command *)p.lc;
@@ -36,7 +36,8 @@ static void	parse_symbols(t_parse p, char *ptr)
 
 	j = -1;
 	p.sym = (struct symtab_command *)p.lc;
-	g_symbols = (t_symbols *)malloc(sizeof(t_symbols) * (PPC(p.sym->nsyms) + 1));
+	g_symbols = (t_symbols *)malloc(sizeof(t_symbols) \
+			* (PPC(p.sym->nsyms) + 1));
 	if (!g_symbols)
 		exit(EXIT_FAILURE);
 	p.array = (void *)ptr + PPC(p.sym->symoff);
@@ -77,9 +78,9 @@ static char	get_type(uint8_t type, uint64_t value, uint8_t sect)
 
 static void	print_symbols(uint8_t o)
 {
-	int64_t		i;
-	uint8_t		flag;
-	char		c;
+	int64_t	i;
+	uint8_t	flag;
+	char	c;
 
 	i = -1;
 	sort(g_size);

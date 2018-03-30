@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:20:00 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/29 20:23:46 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/30 18:26:04 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	print_dump(void *addr, size_t size, size_t start)
 
 static void	parse_segments(t_parse p, char *ptr)
 {
-	int64_t				j;
+	int64_t	j;
 
 	j = -1;
 	p.sc = (struct segment_command *)p.lc;
@@ -63,16 +63,16 @@ static void	parse_segments(t_parse p, char *ptr)
 			&& ISON(g_options, T))
 		{
 			ft_printf("Contents of (__TEXT,__text) section\n");
-			print_dump(ptr + PPC((p.section+j)->offset), PPC((p.section+j)->size), \
-					PPC((p.section+j)->addr));
+			print_dump(ptr + PPC((p.section+j)->offset), \
+					PPC((p.section+j)->size), PPC((p.section+j)->addr));
 		}
 		else if (!ft_strcmp((p.section+j)->sectname, SECT_DATA) \
 			&& !ft_strcmp((p.section+j)->segname, SEG_DATA) \
 			&& ISON(g_options, D))
 		{
 			ft_printf("Contents of (__DATA,__data) section\n");
-			print_dump(ptr + PPC((p.section+j)->offset), PPC((p.section+j)->size), \
-					PPC((p.section+j)->addr));
+			print_dump(ptr + PPC((p.section+j)->offset), \
+					PPC((p.section+j)->size), PPC((p.section+j)->addr));
 		}
 	}
 }
