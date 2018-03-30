@@ -6,11 +6,14 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/29 20:25:25 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/30 18:57:29 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
+#define _D "%s: %s: Is a directory.\n"
+#define _P "%s: %s: Permission denied.\n"
+#define _N "%s: %s: No such file or directory.\n"
 
 t_segments	g_segments = {0, 0, 0, 0};
 char		*g_program = NULL;
@@ -103,17 +106,18 @@ int				main(int ac, char **av)
 	ptr = g_files;
 	if (!ptr)
 	{
-		ft_printf("error: %s: at least one file must be specified\n", g_program);
+		ft_printf("error: %s: at least one file must be specified\n", \
+				g_program);
 		exit(EXIT_FAILURE);
 	}
 	while (ptr)
 	{
 		if (ptr->type == DIRECTORY)
-			ft_dprintf(2, "%s: %s: Is a directory.\n", g_program, ptr->filename);
+			ft_dprintf(2, _D, g_program, ptr->filename);
 		else if (ptr->type == NO_PERMISSION)
-			ft_dprintf(2, "%s: %s: Permission denied.\n", g_program, ptr->filename);
+			ft_dprintf(2, _P, g_program, ptr->filename);
 		else if (ptr->type == DOES_NOT_EXIST)
-			ft_dprintf(2, "%s: %s: No such file or directory.\n", g_program, ptr->filename);
+			ft_dprintf(2, _N, g_program, ptr->filename);
 		else
 			otool(ptr->filename, ptr->size);
 		ptr = ptr->next;

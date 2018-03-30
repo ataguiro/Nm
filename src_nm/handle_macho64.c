@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_macho64.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/30 18:49:51 by ataguiro          #+#    #+#             */
+/*   Updated: 2018/03/30 18:52:01 by ataguiro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "nm.h"
 #define DO_MASK(type) (type & N_TYPE)
-#define PPC(x) (ppc ? swap_uint64(x) : x)
-#define ARCH (ppc ? "(for architecture ppc64)" : "(for architecture x86_64)")
+#define PPC(x) (g_ppc ? swap_uint64(x) : x)
+#define ARCH (g_ppc ? "(for architecture ppc64)" : "(for architecture x86_64)")
 
 int64_t	g_size;
-uint8_t	ppc;
+uint8_t	g_ppc;
 
 static void	parse_segments(t_parse p)
 {
@@ -17,14 +29,14 @@ static void	parse_segments(t_parse p)
 	while (++j < p.sc64->nsects)
 	{
 		check(p.section64 + j);
-		if (!ft_strcmp((p.section64+j)->sectname, SECT_TEXT)
-			&& !ft_strcmp((p.section64+j)->segname, SEG_TEXT))
+		if (!ft_strcmp((p.section64 + j)->sectname, SECT_TEXT)
+			&& !ft_strcmp((p.section64 + j)->segname, SEG_TEXT))
 			g_segments.text = g_segments.k + 1;
-		else if (!ft_strcmp((p.section64+j)->sectname, SECT_DATA)
-			&& !ft_strcmp((p.section64+j)->segname, SEG_DATA))
+		else if (!ft_strcmp((p.section64 + j)->sectname, SECT_DATA)
+			&& !ft_strcmp((p.section64 + j)->segname, SEG_DATA))
 			g_segments.data = g_segments.k + 1;
-		else if (!ft_strcmp((p.section64+j)->sectname, SECT_BSS)
-			&& !ft_strcmp((p.section64+j)->segname, SEG_DATA))
+		else if (!ft_strcmp((p.section64 + j)->sectname, SECT_BSS)
+			&& !ft_strcmp((p.section64 + j)->segname, SEG_DATA))
 			g_segments.bss = g_segments.k + 1;
 		(g_segments.k)++;
 	}
@@ -114,7 +126,7 @@ void		handle_macho64(char *ptr)
 	g_segments.k = 0;
 	p.header64 = (struct mach_header_64 *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header_64);
-	ppc = swap_uint64(p.header64->cputype) == CPU_TYPE_POWERPC64;
+	g_ppc = swap_uint64(p.header64->cputype) == CPU_TYPE_POWERPC64;
 	if ((p.header64->cputype) != CPU_TYPE_X86_64 && !ppc)
 		return ;
 	g_multi == 1 ? ft_printf("\n%s:\n", g_filename) : 0;
