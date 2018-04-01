@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/30 18:08:27 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/01 12:44:38 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	handle_file(char *data)
 		handle_fat64(data);
 	else
 		ft_dprintf(2, "%s: %s The file was not recognized as a valid\
-object file\n\n", g_program, g_filename);
+ object file\n\n", g_program, g_filename);
 }
 
 void	nm(char *filename_local, size_t size)

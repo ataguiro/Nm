@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 18:48:07 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/30 18:52:18 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/01 12:39:08 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void		handle_macho32(char *ptr)
 	p.header = (struct mach_header *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header);
 	g_ppc = swap_uint32(p.header->cputype) == CPU_TYPE_POWERPC;
-	if ((p.header->cputype) != CPU_TYPE_I386 && !ppc)
+	if ((p.header->cputype) != CPU_TYPE_I386 && !g_ppc)
 		return ;
 	g_multi == 1 ? ft_printf("\n%s:\n", g_filename) : 0;
 	g_multi == 3 ? ft_printf("\n%s %s:\n", g_filename, ARCH) : 0;

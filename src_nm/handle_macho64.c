@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 18:49:51 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/30 18:52:01 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/03/30 20:07:59 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void		handle_macho64(char *ptr)
 	p.header64 = (struct mach_header_64 *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header_64);
 	g_ppc = swap_uint64(p.header64->cputype) == CPU_TYPE_POWERPC64;
-	if ((p.header64->cputype) != CPU_TYPE_X86_64 && !ppc)
+	if ((p.header64->cputype) != CPU_TYPE_X86_64 && !g_ppc)
 		return ;
 	g_multi == 1 ? ft_printf("\n%s:\n", g_filename) : 0;
 	g_multi == 3 ? ft_printf("\n%s %s:\n", g_filename, ARCH) : 0;

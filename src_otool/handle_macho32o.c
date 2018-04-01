@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:20:00 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/30 19:43:08 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/01 12:40:36 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static void	otool_hexdump(void *ptr, size_t size, size_t start)
 			ft_printf("%08llx\t", start + i);
 		if (i < size)
 			ft_printf("%02x", 0xff & ((char *)ptr)[i]);
-		if (!ppc && i < size)
+		if (!g_ppc && i < size)
 			ft_putchar(' ');
-		if (ppc && (i % 4 == 3) && i < size)
+		if (g_ppc && (i % 4 == 3) && i < size)
 			ft_putchar(' ');
 		if (i % 16 == 15)
 			ft_putchar('\n');
@@ -84,7 +84,7 @@ void		handle_macho32o(char *ptr)
 	p.header = (struct mach_header *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header);
 	g_ppc = swap_uint32(p.header->cputype) == CPU_TYPE_POWERPC;
-	if ((p.header->cputype) != CPU_TYPE_I386 && !ppc)
+	if ((p.header->cputype) != CPU_TYPE_I386 && !g_ppc)
 		return ;
 	if (g_multi == 3)
 		ft_printf("%s %s:\n", g_filename, ARCH);
