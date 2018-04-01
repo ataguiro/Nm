@@ -1,8 +1,0 @@
-0000000100001b21	e8 3a 5f 00 00 	callq	_secure_malloc
-0000000100001d56	e8 85 be 00 00 	callq	0x10000dbe0 ## symbol stub for: ___asan_stack_malloc_2
-000000010000219d	e8 3e ba 00 00 	callq	0x10000dbe0 ## symbol stub for: ___asan_stack_malloc_2
-00000001000042bd	e8 1e 99 00 00 	callq	0x10000dbe0 ## symbol stub for: ___asan_stack_malloc_2
-000000010000687d	e8 5e 73 00 00 	callq	0x10000dbe0 ## symbol stub for: ___asan_stack_malloc_2
-00000001000070ed	e8 ee 6a 00 00 	callq	0x10000dbe0 ## symbol stub for: ___asan_stack_malloc_2
-_secure_malloc:
-0000000100007a70	e8 a1 61 00 00 	callq	0x10000dc16 ## symbol stub for: _malloc
