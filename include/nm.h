@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/30 18:37:54 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/01 13:07:48 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,7 @@ uint32_t						swap_uint32(uint32_t n);
 uint64_t						swap_uint64(uint64_t n);
 
 void							sort(size_t size);
+
+void							*secure_malloc(size_t size);
 
 #endif

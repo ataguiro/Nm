@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:20:00 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/01 12:40:58 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/01 14:23:14 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	otool_hexdump(void *ptr, size_t size, size_t start)
 	while (i < size + ((size % 16) ? (16 - size % 16) : 0))
 	{
 		if (i % 16 == 0)
-			ft_printf("%08llx\t", start + i);
+			ft_printf("%016llx\t", start + i);
 		if (i < size)
 			ft_printf("%02x", 0xff & ((char *)ptr)[i]);
 		if (!g_ppc && i < size)
@@ -41,6 +41,8 @@ static void	otool_hexdump(void *ptr, size_t size, size_t start)
 
 static void	print_dump(void *addr, size_t size, size_t start)
 {
+	check(addr);
+	check(addr + size);
 	if (ISON(g_options, A))
 		ft_print_memory(addr, size, start);
 	else

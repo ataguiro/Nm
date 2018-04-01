@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 18:49:51 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/30 20:07:59 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/01 13:09:52 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	parse_symbols(t_parse p, char *ptr)
 
 	j = -1;
 	p.sym = (struct symtab_command *)p.lc;
-	g_symbols = (t_symbols *)malloc(sizeof(t_symbols) \
+	g_symbols = (t_symbols *)secure_malloc(sizeof(t_symbols) \
 			* (PPC(p.sym->nsyms) + 1));
 	if (!g_symbols)
 		exit(EXIT_FAILURE);

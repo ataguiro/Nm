@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:20:00 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/01 12:40:36 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/01 14:23:00 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static void	otool_hexdump(void *ptr, size_t size, size_t start)
 
 static void	print_dump(void *addr, size_t size, size_t start)
 {
+	check(addr);
+	check(addr + size);
 	if (ISON(g_options, A))
 		ft_print_memory(addr, size, start);
 	else
