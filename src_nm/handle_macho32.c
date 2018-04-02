@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 18:48:07 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/01 13:09:38 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/02 17:32:39 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	parse_symbols(t_parse p, char *ptr)
 			* (PPC(p.sym->nsyms) + 1));
 	if (!g_symbols)
 		exit(EXIT_FAILURE);
-	p.array = (void *)ptr + PPC(p.sym->symoff);
+	p.array = check((void *)ptr + PPC(p.sym->symoff));
 	g_size = PPC(p.sym->nsyms);
 	while (++j < (int64_t)g_size)
 	{

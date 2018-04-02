@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/01 13:00:25 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/02 17:37:04 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	handle_file(char *data)
 {
 	uint64_t	magic;
 
+	check(data + sizeof(uint64_t));
 	magic = *(uint64_t *)data;
 	(magic == AR_MAGIC || magic == AR_CIGAM) ? handle_ar(data) : 0;
 	magic = (uint32_t)magic;
