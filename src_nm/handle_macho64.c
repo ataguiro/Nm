@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 18:49:51 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/02 17:32:51 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/02 18:58:54 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	parse_symbols(t_parse p, char *ptr)
 		g_symbols[j].value = PPC(p.array64[j].n_value);
 		g_symbols[j].name = check(((void *)ptr + PPC(p.sym->stroff))) \
 			+ PPC(p.array64[j].n_un.n_strx);
-		check(g_symbols[j].name);
+//		check(g_symbols[j].name);
 		g_symbols[j].type = p.array64[j].n_type;
 		g_symbols[j].sect = p.array64[j].n_sect;
 	}
