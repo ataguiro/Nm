@@ -59,7 +59,7 @@ static void	parse_symbols(t_parse p, char *ptr)
 		g_symbols[j].value = PPC(p.array[j].n_value);
 		g_symbols[j].name = check((void *)ptr + PPC(p.sym->stroff)) \
 			+ PPC(p.array[j].n_un.n_strx);
-		check(g_symbols[j].name);
+		g_symbols[j].name = check_bad_string(g_symbols[j].name);
 		g_symbols[j].type = p.array[j].n_type;
 		g_symbols[j].sect = p.array[j].n_sect;
 	}
@@ -101,16 +101,16 @@ static void	print_symbols(uint8_t o)
 	while (g_symbols[++i].name)
 	{
 		c = get_type(g_symbols[i].type, g_symbols[i].value, g_symbols[i].sect);
-		if ((c == '-' || c == 'u') || !ft_strcmp(g_symbols[i].name, ""))
+		if ((c == '-' || c == 'u') || ((size_t)g_symbols[i].name != 0xcafebabe \
+		&& !ft_strcmp(g_symbols[i].name, "")))
 			continue ;
 		o ? ft_printf("%s: ", g_filename) : 0;
 		if (!flag)
 		{
-			if (c == 'U')
-				ft_printf("%8s", " ");
-			else
-				ft_printf("%08llx", g_symbols[i].value);
-			ft_printf(" %c %s\n", c, g_symbols[i].name);
+			(c == 'U') ? ft_printf("%16s", " ") : \
+			ft_printf("%08llx", g_symbols[i].value);
+			ft_printf(" %c %s\n", c, (size_t)g_symbols[i].name != 0xcafebabe \
+			? g_symbols[i].name : "bad string index");
 		}
 		else
 			ft_printf("%s\n", g_symbols[i].name);

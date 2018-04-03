@@ -22,3 +22,11 @@ void	*check(void *ptr)
 		exit(EXIT_FAILURE);
 	}
 }
+
+void	*check_bad_string(void *ptr)
+{
+	if (ptr && ((ptr - g_check.data) < (long)g_check.size))
+		return (ptr);
+	else
+		return ((void *)0xcafebabe);
+}

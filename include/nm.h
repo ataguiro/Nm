@@ -129,6 +129,7 @@ void							nm(char *ptr, size_t n);
 void							otool(char *ptr, size_t n);
 
 void							*check(void *ptr);
+void							*check_bad_string(void *ptr);
 
 void							handle_file(char *ptr);
 void							handle_fileo(char *ptr);

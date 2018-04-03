@@ -59,7 +59,7 @@ static void	parse_symbols(t_parse p, char *ptr)
 		g_symbols[j].value = PPC(p.array64[j].n_value);
 		g_symbols[j].name = check(((void *)ptr + PPC(p.sym->stroff))) \
 			+ PPC(p.array64[j].n_un.n_strx);
-//		check(g_symbols[j].name);
+		g_symbols[j].name = check_bad_string(g_symbols[j].name);
 		g_symbols[j].type = p.array64[j].n_type;
 		g_symbols[j].sect = p.array64[j].n_sect;
 	}
@@ -72,9 +72,9 @@ static char	get_type(uint8_t type, uint64_t value, uint8_t sect)
 
 	c = '?';
 	c = (type & N_STAB) ? '-' : c;
-	c = (DO_MASK(type) == N_UNDF) ? 'u' : c;
-	if (DO_MASK(type) == N_UNDF)
-		c = (value) ? 'c' : 'u';
+	c = (DO_MASK(type) == N_UNDF && (type & N_EXT)) ? 'u' : c;
+	if (DO_MASK(type) == N_UNDF && (type & N_EXT))
+		c = (value) ? 'c' : c;
 	c = (DO_MASK(type) == N_PBUD) ? 'u' : c;
 	c = (DO_MASK(type) == N_ABS) ? 'a' : c;
 	if (DO_MASK(type) == N_SECT)
@@ -98,19 +98,19 @@ static void	print_symbols(uint8_t o)
 	i = -1;
 	sort(g_size);
 	flag = ISON(g_options, J);
-	while (g_symbols[++i].name)
+ 	while (g_symbols[++i].name)
 	{
 		c = get_type(g_symbols[i].type, g_symbols[i].value, g_symbols[i].sect);
-		if ((c == '-' || c == 'u') || !ft_strcmp(g_symbols[i].name, ""))
+		if ((c == '-' || c == 'u') || ((size_t)g_symbols[i].name != 0xcafebabe \
+		&& !ft_strcmp(g_symbols[i].name, "")))
 			continue ;
 		o ? ft_printf("%s: ", g_filename) : 0;
 		if (!flag)
 		{
-			if (c == 'U')
-				ft_printf("%16s", " ");
-			else
-				ft_printf("%016llx", g_symbols[i].value);
-			ft_printf(" %c %s\n", c, g_symbols[i].name);
+			(c == 'U') ? ft_printf("%16s", " ") : \
+			ft_printf("%016llx", g_symbols[i].value);
+			ft_printf(" %c %s\n", c, (size_t)g_symbols[i].name != 0xcafebabe \
+			? g_symbols[i].name : "bad string index");
 		}
 		else
 			ft_printf("%s\n", g_symbols[i].name);

@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "nm.h"
+#define NOT_BAD(a, b) (((size_t)a != 0xcafebabe) && ((size_t)b != 0xcafebabe))
+
 
 static int	compare(t_symbols a, t_symbols b)
 {
@@ -21,7 +23,7 @@ static int	compare(t_symbols a, t_symbols b)
 	if (num_mode)
 		ret = (a.value > b.value);
 	else
-		ret = ft_strcmp(a.name, b.name);
+		ret = NOT_BAD(a.name, b.name) ? ft_strcmp(a.name, b.name) : 0;
 	if (!ret)
 		ret = (a.value > b.value);
 	if (ISON(g_options, R))
