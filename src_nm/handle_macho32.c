@@ -72,8 +72,8 @@ static char	get_type(uint8_t type, uint64_t value, uint8_t sect)
 
 	c = '?';
 	c = (type & N_STAB) ? '-' : c;
-	c = (DO_MASK(type) == N_UNDF) ? 'u' : c;
-	if (DO_MASK(type) == N_UNDF)
+	c = (DO_MASK(type) == N_UNDF && (type & N_EXT)) ? 'u' : c;
+	if (DO_MASK(type) == N_UNDF && (type & N_EXT))
 		c = (value) ? 'c' : 'u';
 	c = (DO_MASK(type) == N_PBUD) ? 'u' : c;
 	c = (DO_MASK(type) == N_ABS) ? 'a' : c;
@@ -107,7 +107,7 @@ static void	print_symbols(uint8_t o)
 		o ? ft_printf("%s: ", g_filename) : 0;
 		if (!flag)
 		{
-			(c == 'U') ? ft_printf("%16s", " ") : \
+			(c == 'U') ? ft_printf("%8s", " ") : \
 			ft_printf("%08llx", g_symbols[i].value);
 			ft_printf(" %c %s\n", c, (size_t)g_symbols[i].name != 0xcafebabe \
 			? g_symbols[i].name : "bad string index");
