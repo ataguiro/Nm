@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 18:45:55 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/01 12:39:43 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/05 17:52:55 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	handle_ar(char *ptr)
 {
-	(void)ptr;
-	ft_dprintf(2, "%s: %s: is an AR archive (unsupported)\n", \
-			g_program, g_filename);
+	struct ar_hdr	*h;
+
+	h = (struct ar_hdr *)(ptr + 8);
+	printf("%s\n", h->ar_name);
 }

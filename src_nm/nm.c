@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/02 17:37:04 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/05 16:51:46 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ void	handle_file(char *data)
 
 	check(data + sizeof(uint64_t));
 	magic = *(uint64_t *)data;
-	(magic == AR_MAGIC || magic == AR_CIGAM) ? handle_ar(data) : 0;
+	if (magic == AR_MAGIC || magic == AR_CIGAM)
+	{
+		handle_ar(data);
+		return ;
+	}
 	magic = (uint32_t)magic;
 	if (magic == MH_MAGIC || magic == MH_CIGAM)
 		handle_macho32(data);
@@ -45,7 +49,7 @@ void	nm(char *filename_local, size_t size)
 		MAP_PRIVATE, fd, 0)))
 	{
 		ft_dprintf(2, "%s: mmap() call failed.\n", g_program);
-		return ;
+		exit(EXIT_FAILURE) ;
 	}
 	close(fd);
 	g_check.data = data;
