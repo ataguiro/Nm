@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/04/02 17:26:34 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/04/06 14:19:53 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SRC2	:=	$(SRCDIR2)otool.c \
 			$(SRCDIR2)handle_macho64o.c \
 			$(SRCDIR2)handle_macho32o.c \
 			$(SRCDIR)clear_globals.c \
-			$(SRCDIR)handle_ar.c \
+			$(SRCDIR2)handle_ar.c \
 			$(SRCDIR)check.c \
 			$(SRCDIR2)handle_fat64.c \
 			$(SRCDIR2)handle_fat32.c \

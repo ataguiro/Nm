@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/05 15:29:41 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/06 15:29:03 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <mach-o/swap.h>
 # include <mach-o/fat.h>
 # include <mach-o/nlist.h>
-//# include <mach-o/stab.h>
+# include <mach-o/stab.h>
 # include <mach-o/ranlib.h>
 # include <ar.h>
 # include <sys/mman.h>
