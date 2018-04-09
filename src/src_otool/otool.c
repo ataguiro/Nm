@@ -29,7 +29,8 @@ int			handle_fileo(char *data)
 	if (data == g_lastaddr)
 		return (handle_recursive(data));
 	g_lastaddr = data;
-	check(data + sizeof(uint64_t));
+	if (NULL == check(data + sizeof(uint64_t)))
+		return (EXIT_FAILURE);
 	magic = *(uint64_t *)data;
 	if ((magic == AR_MAGIC || magic == AR_CIGAM))
 		handle_ar(data);

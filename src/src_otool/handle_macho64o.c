@@ -41,8 +41,8 @@ static void	otool_hexdump(void *ptr, size_t size, size_t start)
 
 static void	print_dump(void *addr, size_t size, size_t start)
 {
-	check(addr);
-	check(addr + size);
+	if ((NULL == check(addr)) || (NULL == check(addr + size)))
+		return ;
 	if (ISON(g_options, A))
 		ft_print_memory(addr, size, start);
 	else
@@ -55,20 +55,20 @@ static void	parse_segments(t_parse p, char *ptr)
 
 	j = -1;
 	check((void *)p.lc + sizeof(struct segment_command_64));
-	p.sc64 = (struct segment_command_64 *)p.lc;
-	p.section64 = (struct section_64 *)((char *)p.sc64 \
+	p.sc64 = g_c ? NULL : (struct segment_command_64 *)p.lc;
+	p.section64 = g_c ? NULL : (struct section_64 *)((char *)p.sc64 \
 			+ sizeof(struct segment_command_64));
-	while (++j < (int64_t)PPC(p.sc64->nsects))
+	while (!g_c && (++j < (int64_t)PPC(p.sc64->nsects)))
 	{
 		check((void *)(p.section64 + j) + sizeof(struct section_64));
-		if (!ft_strcmp((p.section64 + j)->sectname, SECT_TEXT) \
+		if (!g_c && !ft_strcmp((p.section64 + j)->sectname, SECT_TEXT) \
 	&& !ft_strcmp((p.section64 + j)->segname, SEG_TEXT) && ISON(g_options, T))
 		{
 			ft_printf("Contents of (__TEXT,__text) section\n");
 			print_dump(ptr + PPC((p.section64 + j)->offset), \
 					PPC((p.section64 + j)->size), PPC((p.section64 + j)->addr));
 		}
-		else if (!ft_strcmp((p.section64 + j)->sectname, SECT_DATA) \
+		else if (!g_c && !ft_strcmp((p.section64 + j)->sectname, SECT_DATA) \
 	&& !ft_strcmp((p.section64 + j)->segname, SEG_DATA) && ISON(g_options, D))
 		{
 			ft_printf("Contents of (__DATA,__data) section\n");
@@ -85,19 +85,19 @@ void		handle_macho64o(char *ptr)
 
 	i = 0;
 	check(ptr + sizeof(struct mach_header_64));
-	p.header64 = (struct mach_header_64 *)ptr;
-	p.lc = (void *)ptr + sizeof(struct mach_header_64);
-	g_ppc = swap_uint64(p.header64->cputype) == CPU_TYPE_POWERPC64;
-	if ((p.header64->cputype) != CPU_TYPE_X86_64 && !g_ppc)
+	p.header64 = g_c ? NULL : (struct mach_header_64 *)ptr;
+	p.lc = g_c ? NULL : (void *)ptr + sizeof(struct mach_header_64);
+	g_ppc = g_c ? 0 : swap_uint64(p.header64->cputype) == CPU_TYPE_POWERPC64;
+	if (g_c || ((p.header64->cputype) != CPU_TYPE_X86_64 && !g_ppc))
 		return ;
 	if (g_multi == 3)
 		ft_printf("%s %s:\n", g_filename, ARCH);
 	else if (g_multi != 5)
 		ft_printf("%s:\n", g_filename, ARCH);
-	while (i++ < PPC(p.header64->ncmds))
+	while (!g_c && (i++ < PPC(p.header64->ncmds)))
 	{
 		check((void *)p.lc + sizeof(struct load_command));
-		if (PPC(p.lc->cmd) == LC_SEGMENT_64)
+		if (!g_c && (PPC(p.lc->cmd) == LC_SEGMENT_64))
 			parse_segments(p, ptr);
 		p.lc = check((void *)p.lc + PPC(p.lc->cmdsize));
 	}

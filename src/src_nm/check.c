@@ -12,14 +12,18 @@
 
 #include "nm.h"
 
+uint8_t	g_c = 0;
+
 void	*check(void *ptr)
 {
-	if (ptr && ((ptr - g_check.data) < (long)g_check.size))
+	if ((int)ptr >= 0 && ((ptr - g_check.data) < (long)g_check.size))
 		return (ptr);
 	else
 	{
 		ft_dprintf(2, "%s: %s: corrupted file\n", g_program, g_filename);
-		exit(EXIT_FAILURE);
+		g_c = 1;
+		g_error = 1;
+		return (NULL);
 	}
 }
 

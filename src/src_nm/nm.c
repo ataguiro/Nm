@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "nm.h"
+#define NOT_RECO "%s: %s The file was not recognized as a valid object file\n\n"
 
 t_check	g_check = {0, NULL};
 void	*g_lastaddr = 0;
@@ -29,7 +30,8 @@ int			handle_file(char *data)
 	if (data == g_lastaddr)
 		return (handle_recursive(data));
 	g_lastaddr = data;
-	check(data + sizeof(uint64_t));
+	if (NULL == check(data + sizeof(uint64_t)))
+		return (EXIT_FAILURE);
 	magic = *(uint64_t *)data;
 	if ((magic == AR_MAGIC || magic == AR_CIGAM))
 		handle_ar(data);
@@ -44,8 +46,7 @@ int			handle_file(char *data)
 		handle_fat64(data);
 	else
 	{
-		ft_dprintf(2, "%s: %s The file was not recognized as a valid \
-object file\n\n", g_program, g_filename);
+		ft_dprintf(2, NOT_RECO, g_program, g_filename);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

@@ -26,7 +26,8 @@ static void	set_multi(t_parse p, uint32_t n)
 	int64_t	i;
 
 	i = -1;
-	check(p.fatarch + n);
+	if (NULL == check(p.fatarch + n))
+		return ;
 	while (++i < n)
 	{
 		if (is_hostarch(swap_uint64(p.fatarch[i].cputype)))
@@ -46,7 +47,8 @@ static int	redistribute(cpu_type_t type, char *ptr)
 	cpu_type_t	tmp;
 
 	tmp = swap_uint64(type);
-	check(ptr);
+	if (NULL == check(ptr))
+		return (0);
 	if (!g_multi)
 	{
 		if (is_hostarch(tmp))
@@ -68,12 +70,15 @@ void		handle_fat64(char *ptr)
 	int64_t		i;
 
 	i = -1;
-	check(ptr + sizeof(struct fat_header));
+	if (NULL == check(ptr + sizeof(struct fat_header)))
+		return ;
 	p.fathdr = (struct fat_header *)ptr;
-	check((void *)p.fathdr + sizeof(struct fat_arch_64));
+	if (NULL == check((void *)p.fathdr + sizeof(struct fat_arch_64)))
+		return ;
 	p.fatarch64 = (struct fat_arch_64 *)(p.fathdr + 1);
 	n = swap_uint64(p.fathdr->nfat_arch);
-	check(p.fatarch64 + n);
+	if (NULL == check(p.fatarch64 + n))
+		return ;
 	set_multi(p, n);
 	while (++i < n)
 	{

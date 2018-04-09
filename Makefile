@@ -18,7 +18,7 @@ INDEX	:=	1
 
 # ===== Standard =====
 CC		:=	gcc
-CFLAGS	:=	-Wall -Wextra -Werror# -g -fsanitize=address
+CFLAGS	:=	-Wall -Wextra -Werror -g -fsanitize=address
 SRCDIR	:=	src/
 SRCDIR1	:=	src_nm/
 SRCDIR2	:=	src_otool/

@@ -24,19 +24,19 @@ static void	parse_segments(t_parse p)
 
 	j = -1;
 	check((void *)p.lc + sizeof(struct segment_command));
-	p.sc = (struct segment_command *)p.lc;
-	p.section = (struct section *)((char *)p.sc \
+	p.sc = g_c ? NULL : (struct segment_command *)p.lc;
+	p.section = g_c ? NULL : (struct section *)((char *)p.sc \
 			+ sizeof(struct segment_command));
-	while (++j < PPC(p.sc->nsects))
+	while (!g_c && (++j < PPC(p.sc->nsects)))
 	{
 		check((void *)(p.section + j) + sizeof(struct section));
-		if (!ft_strcmp((p.section + j)->sectname, SECT_TEXT)
+		if (!g_c && !ft_strcmp((p.section + j)->sectname, SECT_TEXT)
 			&& !ft_strcmp((p.section + j)->segname, SEG_TEXT))
 			g_segments.text = g_segments.k + 1;
-		else if (!ft_strcmp((p.section + j)->sectname, SECT_DATA)
+		else if (!g_c && !ft_strcmp((p.section + j)->sectname, SECT_DATA)
 			&& !ft_strcmp((p.section + j)->segname, SEG_DATA))
 			g_segments.data = g_segments.k + 1;
-		else if (!ft_strcmp((p.section + j)->sectname, SECT_BSS)
+		else if (!g_c && !ft_strcmp((p.section + j)->sectname, SECT_BSS)
 			&& !ft_strcmp((p.section + j)->segname, SEG_DATA))
 			g_segments.bss = g_segments.k + 1;
 		(g_segments.k)++;
@@ -49,14 +49,14 @@ static void	parse_symbols(t_parse p, char *ptr)
 
 	j = -1;
 	check((void *)p.lc + sizeof(struct symtab_command));
-	p.sym = (struct symtab_command *)p.lc;
-	g_symbols = (t_symbols *)malloc(sizeof(t_symbols) \
+	p.sym = g_c ? NULL : (struct symtab_command *)p.lc;
+	g_symbols = g_c ? NULL : (t_symbols *)malloc(sizeof(t_symbols) \
 			* (PPC(p.sym->nsyms) + 1));
 	if (!g_symbols)
 		return ;
-	p.array = check((void *)ptr + PPC(p.sym->symoff));
-	g_size = PPC(p.sym->nsyms);
-	while (++j < (int64_t)g_size)
+	p.array = g_c ? NULL : check((void *)ptr + PPC(p.sym->symoff));
+	g_size = g_c ? 0 : PPC(p.sym->nsyms);
+	while (!g_c && (++j < (int64_t)g_size))
 	{
 		g_symbols[j].value = PPC(p.array[j].n_value);
 		g_symbols[j].name = check((void *)ptr + PPC(p.sym->stroff)) \
@@ -65,7 +65,7 @@ static void	parse_symbols(t_parse p, char *ptr)
 		g_symbols[j].type = p.array[j].n_type;
 		g_symbols[j].sect = p.array[j].n_sect;
 	}
-	g_symbols[j].name = NULL;
+	!g_c ? g_symbols[j].name = NULL : 0;
 }
 
 static char	get_type(uint8_t type, uint64_t value, uint8_t sect)
@@ -127,23 +127,23 @@ void		handle_macho32(char *ptr)
 	i = 0;
 	g_segments.k = 0;
 	check(ptr + sizeof(struct mach_header));
-	p.header = (struct mach_header *)ptr;
-	p.lc = (void *)ptr + sizeof(struct mach_header);
-	g_ppc = swap_uint32(p.header->cputype) == CPU_TYPE_POWERPC;
-	if ((p.header->cputype) != CPU_TYPE_I386 && !g_ppc)
+	p.header = g_c ? NULL : (struct mach_header *)ptr;
+	p.lc = g_c ? NULL : (void *)ptr + sizeof(struct mach_header);
+	g_ppc = g_c ? 0 : swap_uint32(p.header->cputype) == CPU_TYPE_POWERPC;
+	if (g_c || ((p.header->cputype) != CPU_TYPE_I386 && !g_ppc))
 		return ;
 	g_multi == 1 ? ft_printf("\n%s:\n", g_filename) : 0;
 	g_multi == 3 ? ft_printf("\n%s %s:\n", g_filename, ARCH) : 0;
 	g_multi == 2 ? ft_printf("%s:\n", g_filename, ARCH) : 0;
-	while (i++ < PPC(p.header->ncmds))
+	while (!g_c && (i++ < PPC(p.header->ncmds)))
 	{
 		check(p.lc + sizeof(struct load_command));
-		if (PPC(p.lc->cmd) == LC_SEGMENT)
+		if (!g_c && (PPC(p.lc->cmd) == LC_SEGMENT))
 			parse_segments(p);
-		if (PPC(p.lc->cmd) == LC_SYMTAB)
+		if (!g_c && (PPC(p.lc->cmd) == LC_SYMTAB))
 			parse_symbols(p, ptr);
 		p.lc = check((void *)p.lc + PPC(p.lc->cmdsize));
 	}
-	print_symbols(ISON(g_options, O));
+	!g_c ? print_symbols(ISON(g_options, O)) : 0;
 	clear_globals();
 }

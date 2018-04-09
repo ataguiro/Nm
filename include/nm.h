@@ -124,6 +124,8 @@ extern uint8_t					g_options;
 extern char						*g_program;
 extern char						*g_filename;
 extern uint8_t					g_multi;
+extern uint8_t					g_c;
+extern uint8_t					g_error;
 
 int								nm(char *ptr, size_t n);
 int								otool(char *ptr, size_t n);
