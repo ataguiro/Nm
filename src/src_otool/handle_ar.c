@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 18:45:55 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/09 14:35:37 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/09 15:00:01 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void			handle_ar(char *ptr)
 	size_t			n;
 	int				i;
 
-	g_multi = 0;
+	g_multi = 5;
+	ft_printf("Archive : %s\n", g_filename);
 	ptr += SARMAG;
 	i = -1;
 	check(ptr + sizeof(struct ar_hdr));
@@ -39,7 +40,7 @@ void			handle_ar(char *ptr)
 		if (!ft_strncmp(h->ar_name, ARMAG, SARMAG))
 			return ;
 		str = ptr + sizeof(struct ar_hdr);
-		ft_printf("\n%s(%s):\n", g_filename, str);
+		ft_printf("%s(%s):\n", g_filename, str);
 		n = ft_strlen(str);
 		while ((check(str + n)) && str[n++] == 0)
 			;

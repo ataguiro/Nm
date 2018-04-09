@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:20:00 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/09 14:48:40 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/09 14:58:22 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void		handle_macho64o(char *ptr)
 		return ;
 	if (g_multi == 3)
 		ft_printf("%s %s:\n", g_filename, ARCH);
-	else
+	else if (g_multi != 5)
 		ft_printf("%s:\n", g_filename, ARCH);
 	while (i++ < PPC(p.header64->ncmds))
 	{

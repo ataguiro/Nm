@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 17:20:00 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/09 14:37:59 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/09 14:58:12 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,13 @@ static void	parse_segments(t_parse p, char *ptr)
 	int64_t	j;
 
 	j = -1;
+	check((void *)p.lc + sizeof(struct segment_command));
 	p.sc = (struct segment_command *)p.lc;
 	p.section = (struct section *)((char *)p.sc \
 			+ sizeof(struct segment_command));
 	while (++j < PPC(p.sc->nsects))
 	{
-		check(p.section + j);
+		check((void *)(p.section + j) + sizeof(struct section));
 		if (!ft_strcmp((p.section + j)->sectname, SECT_TEXT) \
 	&& !ft_strcmp((p.section + j)->segname, SEG_TEXT) && ISON(g_options, T))
 		{
@@ -91,7 +92,7 @@ void		handle_macho32o(char *ptr)
 		return ;
 	if (g_multi == 3)
 		ft_printf("%s %s:\n", g_filename, ARCH);
-	else
+	else if (g_multi != 5)
 		ft_printf("%s:\n", g_filename, ARCH);
 	while (i++ < PPC(p.header->ncmds))
 	{
