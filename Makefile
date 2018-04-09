@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/04/09 18:16:53 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/04/09 18:56:16 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,7 @@ SRC		:=	$(SRCDIR)$(SRCDIR1)nm.c \
 			$(SRCDIR)$(SRCDIR1)clear_globals.c \
 			$(SRCDIR)$(SRCDIR1)swap_bytes.c \
 			$(SRCDIR)$(SRCDIR1)sort.c \
-			$(SRCDIR)$(SRCDIR1)check.c \
-			$(SRCDIR)$(SRCDIR1)secure_malloc.c
+			$(SRCDIR)$(SRCDIR1)check.c
 SRC2	:=	$(SRCDIR)$(SRCDIR2)otool.c \
 			$(SRCDIR)$(SRCDIR2)main_otool.c \
 			$(SRCDIR)$(SRCDIR2)handle_macho64o.c \
@@ -46,8 +45,7 @@ SRC2	:=	$(SRCDIR)$(SRCDIR2)otool.c \
 			$(SRCDIR)$(SRCDIR1)check.c \
 			$(SRCDIR)$(SRCDIR2)handle_fat64.c \
 			$(SRCDIR)$(SRCDIR2)handle_fat32.c \
-			$(SRCDIR)$(SRCDIR1)swap_bytes.c \
-			$(SRCDIR)$(SRCDIR1)secure_malloc.c
+			$(SRCDIR)$(SRCDIR1)swap_bytes.c
 
 
 OBJ		:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o) $(SRC2:$(SRCDIR)%.c=$(OBJDIR)%.o)
@@ -90,7 +88,7 @@ $(OBJDIR)%.o: $(SRCDIR)%.c $(CACHEF)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 	printf "\r"
 	printf $(BGREEN)"[ compiling objects... ] "
-	printf "$(shell echo 'scale=2;$(INDEX)/19 * 100' | bc)%%"$(EOC)
+	printf "$(shell echo 'scale=2;$(INDEX)/18 * 100' | bc)%%"$(EOC)
 	$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
 $(CACHEF):

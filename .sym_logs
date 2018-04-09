@@ -1,0 +1,6 @@
+0000000100001fe4	e8 2d cb 00 00 	callq	0x10000eb16 ## symbol stub for: _malloc
+0000000100002256	e8 85 c8 00 00 	callq	0x10000eae0 ## symbol stub for: ___asan_stack_malloc_2
+00000001000026ad	e8 2e c4 00 00 	callq	0x10000eae0 ## symbol stub for: ___asan_stack_malloc_2
+000000010000492d	e8 ae a1 00 00 	callq	0x10000eae0 ## symbol stub for: ___asan_stack_malloc_2
+000000010000740d	e8 ce 76 00 00 	callq	0x10000eae0 ## symbol stub for: ___asan_stack_malloc_2
+0000000100007dfd	e8 de 6c 00 00 	callq	0x10000eae0 ## symbol stub for: ___asan_stack_malloc_2

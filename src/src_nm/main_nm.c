@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/09 14:27:05 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/09 19:00:39 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ static void		save_as_file(char *element)
 	t_files	*new;
 
 	ptr = g_files;
-	new = (t_files *)secure_malloc(sizeof(t_files));
+	new = (t_files *)malloc(sizeof(t_files));
+	if (!new)
+		return ;
 	new->next = NULL;
 	new->filename = element;
 	new->type = get_file_type(element, new);
@@ -115,8 +117,8 @@ int				main(int ac, char **av)
 		return (EXIT_FAILURE);
 	ptr = g_files;
 	(!ptr) ? save_as_file("a.out") : 0;
-	ptr = g_files;
-	g_multi = (ptr->next) ? 1 : 0;
+	ptr = g_files ? g_files : NULL;
+	g_multi = (ptr && ptr->next) ? 1 : 0;
 	g_oldmulti = g_multi;
 	while (ptr)
 	{
