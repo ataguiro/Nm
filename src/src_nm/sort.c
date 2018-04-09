@@ -6,13 +6,12 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 15:43:21 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/06 18:06:53 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/09 17:04:13 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
 #define NOT_BAD(a, b) (((size_t)a != 0xcafebabe) && ((size_t)b != 0xcafebabe))
-
 
 static int	compare(t_symbols a, t_symbols b)
 {
