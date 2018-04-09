@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 18:45:55 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/09 14:54:26 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/09 18:14:31 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ void			handle_ar(char *ptr)
 	check(ptr + sizeof(struct ar_hdr));
 	h = (struct ar_hdr *)(ptr);
 	ptr += (ft_atoi(h->ar_size) + sizeof(struct ar_hdr));
-	while (valid_ptr(ptr))
+	while (valid_ptr(ptr) && (h = (struct ar_hdr *)ptr))
 	{
-		h = (struct ar_hdr *)(ptr);
 		if (!ft_strncmp(h->ar_name, ARMAG, SARMAG))
 			return ;
 		str = ptr + sizeof(struct ar_hdr);
@@ -43,6 +42,8 @@ void			handle_ar(char *ptr)
 		n = ft_strlen(str);
 		while ((check(str + n)) && str[n++] == 0)
 			;
+		if (ft_atoi(h->ar_size) <= 0)
+			return ;
 		handle_file(ptr + sizeof(struct ar_hdr) + n - 1);
 		ptr += (ft_atoi(h->ar_size) + sizeof(struct ar_hdr));
 	}

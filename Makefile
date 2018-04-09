@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/04/08 17:51:43 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/04/09 18:16:53 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,7 @@ $(OBJDIR)%.o: $(SRCDIR)%.c $(CACHEF)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 	printf "\r"
 	printf $(BGREEN)"[ compiling objects... ] "
-	printf "$(shell echo 'scale=2;$(INDEX)/12 * 100' | bc)%%"$(EOC)
+	printf "$(shell echo 'scale=2;$(INDEX)/19 * 100' | bc)%%"$(EOC)
 	$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
 $(CACHEF):
