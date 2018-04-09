@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 18:49:51 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/06 18:07:23 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/09 14:46:45 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ static void	parse_segments(t_parse p)
 	int64_t	j;
 
 	j = -1;
+	check((void *)p.lc + sizeof(struct segment_command_64));
 	p.sc64 = (struct segment_command_64 *)p.lc;
 	p.section64 = (struct section_64 *)((char *)p.sc64 \
 			+ sizeof(struct segment_command_64));
 	while (++j < p.sc64->nsects)
 	{
-		check(p.section64 + j);
+		check((void *)(p.section64 + j) + sizeof(struct section_64));
 		if (!ft_strcmp((p.section64 + j)->sectname, SECT_TEXT)
 			&& !ft_strcmp((p.section64 + j)->segname, SEG_TEXT))
 			g_segments.text = g_segments.k + 1;
@@ -47,6 +48,7 @@ static void	parse_symbols(t_parse p, char *ptr)
 	int64_t	j;
 
 	j = -1;
+	check((void *)p.lc + sizeof(struct symtab_command));
 	p.sym = (struct symtab_command *)p.lc;
 	g_symbols = (t_symbols *)secure_malloc(sizeof(t_symbols) \
 			* (PPC(p.sym->nsyms) + 1));
@@ -124,6 +126,7 @@ void		handle_macho64(char *ptr)
 
 	i = 0;
 	g_segments.k = 0;
+	check(ptr + sizeof(struct mach_header_64));
 	p.header64 = (struct mach_header_64 *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header_64);
 	g_ppc = swap_uint64(p.header64->cputype) == CPU_TYPE_POWERPC64;
@@ -134,11 +137,12 @@ void		handle_macho64(char *ptr)
 	g_multi == 2 ? ft_printf("%s:\n", g_filename, ARCH) : 0;
 	while (i++ < PPC(p.header64->ncmds))
 	{
+		check((void *)p.lc + sizeof(struct load_command));
 		if (PPC(p.lc->cmd) == LC_SEGMENT_64)
 			parse_segments(p);
 		if (PPC(p.lc->cmd) == LC_SYMTAB)
 			parse_symbols(p, ptr);
-		check(p.lc = (void *)p.lc + PPC(p.lc->cmdsize));
+		p.lc = check((void *)p.lc + PPC(p.lc->cmdsize));
 	}
 	print_symbols(ISON(g_options, O));
 	clear_globals();

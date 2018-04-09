@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 18:48:07 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/06 18:07:46 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/09 13:27:54 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ static void	parse_segments(t_parse p)
 	int64_t	j;
 
 	j = -1;
+	check((void *)p.lc + sizeof(struct segment_command));
 	p.sc = (struct segment_command *)p.lc;
 	p.section = (struct section *)((char *)p.sc \
 			+ sizeof(struct segment_command));
 	while (++j < PPC(p.sc->nsects))
 	{
-		check(p.section + j);
+		check((void *)(p.section + j) + sizeof(struct section));
 		if (!ft_strcmp((p.section + j)->sectname, SECT_TEXT)
 			&& !ft_strcmp((p.section + j)->segname, SEG_TEXT))
 			g_segments.text = g_segments.k + 1;
@@ -47,6 +48,7 @@ static void	parse_symbols(t_parse p, char *ptr)
 	int64_t	j;
 
 	j = -1;
+	check((void *)p.lc + sizeof(struct symtab_command));
 	p.sym = (struct symtab_command *)p.lc;
 	g_symbols = (t_symbols *)secure_malloc(sizeof(t_symbols) \
 			* (PPC(p.sym->nsyms) + 1));
@@ -124,6 +126,7 @@ void		handle_macho32(char *ptr)
 
 	i = 0;
 	g_segments.k = 0;
+	check(ptr + sizeof(struct mach_header));
 	p.header = (struct mach_header *)ptr;
 	p.lc = (void *)ptr + sizeof(struct mach_header);
 	g_ppc = swap_uint32(p.header->cputype) == CPU_TYPE_POWERPC;
@@ -134,6 +137,7 @@ void		handle_macho32(char *ptr)
 	g_multi == 2 ? ft_printf("%s:\n", g_filename, ARCH) : 0;
 	while (i++ < PPC(p.header->ncmds))
 	{
+		check(p.lc + sizeof(struct load_command));
 		if (PPC(p.lc->cmd) == LC_SEGMENT)
 			parse_segments(p);
 		if (PPC(p.lc->cmd) == LC_SYMTAB)

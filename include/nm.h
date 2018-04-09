@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/06 15:29:03 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/09 14:32:55 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,14 +125,14 @@ extern char						*g_program;
 extern char						*g_filename;
 extern uint8_t					g_multi;
 
-void							nm(char *ptr, size_t n);
-void							otool(char *ptr, size_t n);
+int								nm(char *ptr, size_t n);
+int								otool(char *ptr, size_t n);
 
 void							*check(void *ptr);
 void							*check_bad_string(void *ptr);
 
-void							handle_file(char *ptr);
-void							handle_fileo(char *ptr);
+int								handle_file(char *ptr);
+int								handle_fileo(char *ptr);
 
 void							handle_macho32(char *ptr);
 void							handle_macho32o(char *ptr);

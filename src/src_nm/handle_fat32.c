@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 14:34:13 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/03/30 18:18:11 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/09 13:17:26 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	set_multi(t_parse p, uint32_t n)
 	int64_t	i;
 
 	i = -1;
+	check(p.fatarch + n);
 	while (++i < n)
 	{
 		if (is_hostarch(swap_uint32(p.fatarch[i].cputype)))
@@ -45,16 +46,17 @@ static int	redistribute(cpu_type_t type, char *ptr)
 	cpu_type_t	tmp;
 
 	tmp = swap_uint32(type);
+	check(ptr);
 	if (!g_multi)
 	{
 		if (is_hostarch(tmp))
 		{
-			handle_fileo(ptr);
+			handle_file(ptr);
 			return (0);
 		}
 	}
 	else
-		handle_fileo(ptr);
+		handle_file(ptr);
 	return (1);
 }
 
@@ -66,9 +68,12 @@ void		handle_fat32(char *ptr)
 	int64_t		i;
 
 	i = -1;
+	check(ptr + sizeof(struct fat_header));
 	p.fathdr = (struct fat_header *)ptr;
-	p.fatarch = (struct fat_arch *)(p.fathdr + 1);
+	check((void *)p.fathdr + sizeof(struct fat_arch));
+	p.fatarch = check((struct fat_arch *)(p.fathdr + 1));
 	n = swap_uint32(p.fathdr->nfat_arch);
+	check(p.fatarch + n);
 	set_multi(p, n);
 	while (++i < n)
 	{

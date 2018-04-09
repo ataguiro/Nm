@@ -6,7 +6,7 @@
 #    By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/15 14:57:28 by ataguiro          #+#    #+#              #
-#    Updated: 2018/04/06 14:19:53 by ataguiro         ###   ########.fr        #
+#    Updated: 2018/04/08 17:51:43 by ataguiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,34 +19,35 @@ INDEX	:=	1
 # ===== Standard =====
 CC		:=	gcc
 CFLAGS	:=	-Wall -Wextra -Werror -g -fsanitize=address
-SRCDIR	:=	src_nm/
+SRCDIR	:=	src/
+SRCDIR1	:=	src_nm/
 SRCDIR2	:=	src_otool/
 OBJDIR	:=	obj/
 INCDIR	:=	include/
 LIBDIR	:=	libft/
-SRC		:=	$(SRCDIR)nm.c \
-			$(SRCDIR)main_nm.c \
-			$(SRCDIR)handle_macho64.c \
-			$(SRCDIR)handle_macho32.c \
-			$(SRCDIR)handle_fat64.c \
-			$(SRCDIR)handle_fat32.c \
-			$(SRCDIR)handle_ar.c \
-			$(SRCDIR)clear_globals.c \
-			$(SRCDIR)swap_bytes.c \
-			$(SRCDIR)sort.c \
-			$(SRCDIR)check.c \
-			$(SRCDIR)secure_malloc.c
-SRC2	:=	$(SRCDIR2)otool.c \
-			$(SRCDIR2)main_otool.c \
-			$(SRCDIR2)handle_macho64o.c \
-			$(SRCDIR2)handle_macho32o.c \
-			$(SRCDIR)clear_globals.c \
-			$(SRCDIR2)handle_ar.c \
-			$(SRCDIR)check.c \
-			$(SRCDIR2)handle_fat64.c \
-			$(SRCDIR2)handle_fat32.c \
-			$(SRCDIR)swap_bytes.c \
-			$(SRCDIR)secure_malloc.c
+SRC		:=	$(SRCDIR)$(SRCDIR1)nm.c \
+			$(SRCDIR)$(SRCDIR1)main_nm.c \
+			$(SRCDIR)$(SRCDIR1)handle_macho64.c \
+			$(SRCDIR)$(SRCDIR1)handle_macho32.c \
+			$(SRCDIR)$(SRCDIR1)handle_fat64.c \
+			$(SRCDIR)$(SRCDIR1)handle_fat32.c \
+			$(SRCDIR)$(SRCDIR1)handle_ar.c \
+			$(SRCDIR)$(SRCDIR1)clear_globals.c \
+			$(SRCDIR)$(SRCDIR1)swap_bytes.c \
+			$(SRCDIR)$(SRCDIR1)sort.c \
+			$(SRCDIR)$(SRCDIR1)check.c \
+			$(SRCDIR)$(SRCDIR1)secure_malloc.c
+SRC2	:=	$(SRCDIR)$(SRCDIR2)otool.c \
+			$(SRCDIR)$(SRCDIR2)main_otool.c \
+			$(SRCDIR)$(SRCDIR2)handle_macho64o.c \
+			$(SRCDIR)$(SRCDIR2)handle_macho32o.c \
+			$(SRCDIR)$(SRCDIR1)clear_globals.c \
+			$(SRCDIR)$(SRCDIR2)handle_ar.c \
+			$(SRCDIR)$(SRCDIR1)check.c \
+			$(SRCDIR)$(SRCDIR2)handle_fat64.c \
+			$(SRCDIR)$(SRCDIR2)handle_fat32.c \
+			$(SRCDIR)$(SRCDIR1)swap_bytes.c \
+			$(SRCDIR)$(SRCDIR1)secure_malloc.c
 
 
 OBJ		:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o) $(SRC2:$(SRCDIR)%.c=$(OBJDIR)%.o)
@@ -94,6 +95,8 @@ $(OBJDIR)%.o: $(SRCDIR)%.c $(CACHEF)
 
 $(CACHEF):
 	test -d $(OBJDIR) || mkdir $(OBJDIR)
+	test -d $(OBJDIR)src_nm || mkdir $(OBJDIR)src_nm
+	test -d $(OBJDIR)src_otool || mkdir $(OBJDIR)src_otool
 	test -d $(CACHEF) || touch $(CACHEF)
 
 %.c:
