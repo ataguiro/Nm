@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 18:48:07 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/10 13:24:55 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/10 14:00:27 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static void	print_symbols(uint8_t o)
 	i = -1;
 	sort(g_size);
 	flag = ISON(g_options, J);
-	while (g_symbols && g_symbols[++i].name)
+	while (g_symbols && g_symbols[++i].name && (name_check(g_symbols[i].name)))
 	{
 		c = get_type(g_symbols[i].type, g_symbols[i].value, g_symbols[i].sect);
 		if ((c == '-' || c == 'u') || ((size_t)g_symbols[i].name != 0xcafebabe \

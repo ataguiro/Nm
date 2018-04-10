@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:36 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/09 14:32:55 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/10 14:01:34 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ extern uint8_t					g_error;
 int								nm(char *ptr, size_t n);
 int								otool(char *ptr, size_t n);
 
+
+uint8_t							name_check(char *str);
 void							*check(void *ptr);
 void							*check_bad_string(void *ptr);
 
