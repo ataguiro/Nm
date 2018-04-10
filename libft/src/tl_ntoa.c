@@ -6,7 +6,7 @@
 /*   By: ataguiro <ataguiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/10 23:46:27 by ataguiro          #+#    #+#             */
-/*   Updated: 2017/02/26 17:18:09 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/10 13:42:09 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static int	tl_nbrlen(long long x, int base, int tmp)
 	|| IS_ON(fselect()->args, SPACE) || IS_ON(fselect()->args, SPACE));
 	if ((x ^ (LL_MIN - 1)))
 	{
-		ABS(x);
 		while (x /= base)
 			++len;
 	}
