@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 13:14:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/10 14:02:21 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/10 14:10:39 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ uint8_t	name_check(char *str)
 	{
 		if ((void *)(str + i + 1) >= (g_check.data + g_check.size))
 		{
+			if (!g_c)
+				ft_dprintf(2, "%s: %s: string lenght superior to file size\n", \
+					g_program, g_filename);
 			g_c = 1;
 			return (0);
 		}
