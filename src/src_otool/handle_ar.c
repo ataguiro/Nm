@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 18:45:55 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/09 15:00:01 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/10 13:13:36 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void			handle_ar(char *ptr)
 		h = (struct ar_hdr *)(ptr);
 		if (!check(h->ar_name) || !ft_strncmp(h->ar_name, ARMAG, SARMAG))
 			return ;
-		str = ptr + sizeof(struct ar_hdr);
-		ft_printf("%s(%s):\n", g_filename, str);
-		n = ft_strlen(str);
-		while ((check(str + n)) && str[n++] == 0)
+		str = check(ptr + sizeof(struct ar_hdr));
+		ft_printf("%s(%s):\n", g_filename, g_c ? "(corrupted)" : str);
+		n = g_c ? 0 : ft_strlen(str);
+		while (!g_c && (check(str + n)) && str[n++] == 0)
 			;
 		!g_c ? handle_fileo(ptr + sizeof(struct ar_hdr) + n - 1) : 0;
 		!g_c ? ptr += (ft_atoi(h->ar_size) + sizeof(struct ar_hdr)) : 0;

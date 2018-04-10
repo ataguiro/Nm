@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 15:43:21 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/09 17:04:13 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/10 12:46:47 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		sort(size_t n)
 	size_t				j;
 	t_symbols			tmp;
 
-	if (!g_symbols)
+	if (!g_symbols || !n)
 		return ;
 	if (ISON(g_options, P))
 		return ;

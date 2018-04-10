@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 18:48:07 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/09 18:53:12 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/10 13:24:55 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static void	parse_symbols(t_parse p, char *ptr)
 		return ;
 	p.array = g_c ? NULL : check((void *)ptr + PPC(p.sym->symoff));
 	g_size = g_c ? 0 : PPC(p.sym->nsyms);
+	check(p.array + g_size);
 	while (!g_c && (++j < (int64_t)g_size))
 	{
 		g_symbols[j].value = PPC(p.array[j].n_value);
@@ -115,7 +116,8 @@ static void	print_symbols(uint8_t o)
 			? g_symbols[i].name : "bad string index");
 		}
 		else
-			ft_printf("%s\n", g_symbols[i].name);
+			ft_printf("%s\n", (size_t)g_symbols[i].name != 0xcafebabe \
+			? g_symbols[i].name : "bad string index");
 	}
 }
 

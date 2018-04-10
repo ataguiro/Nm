@@ -6,7 +6,7 @@
 /*   By: ataguiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 14:33:09 by ataguiro          #+#    #+#             */
-/*   Updated: 2018/04/09 18:09:31 by ataguiro         ###   ########.fr       */
+/*   Updated: 2018/04/10 12:15:06 by ataguiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			handle_file(char *data)
 	if (data == g_lastaddr)
 		return (handle_recursive(data));
 	g_lastaddr = data;
-	if (NULL == check(data + sizeof(uint64_t)))
+	if (NULL == check(data + sizeof(uint64_t)) || g_check.size < 8)
 		return (EXIT_FAILURE);
 	magic = *(uint64_t *)data;
 	if ((magic == AR_MAGIC || magic == AR_CIGAM))
